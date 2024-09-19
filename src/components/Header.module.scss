@@ -1,0 +1,40 @@
+.container {
+  background-color: var(--background-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 15px;
+}
+
+.logo {
+  font-size: 50px;
+  margin-left: 80px;
+  span {
+    color: var(--main-color);
+  }
+}
+
+.exitBtn {
+  width: 90px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  column-gap: 5px;
+  border-radius: 6px 8px 8px 6px;
+  span {
+    width: 36px;
+    height: 100%;
+    background-color: var(--main-color);
+    border-radius: 0 6px 6px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+  }
+}
+
+.hr {
+  height: 2px;
+  border: 0;
+  background-color: rgb(39, 39, 42);
+}

@@ -1,6 +1,6 @@
 .page {
   width: 100vw;
-  height: 100vh;
+  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,10 +10,10 @@
 .loginForm {
   width: 382px;
   height: 388px;
+  background-color: var(--background-dark);
   display: flex;
   flex-direction: column;
   row-gap: 16px;
-  border: 1px solid rgb(39, 39, 42);
   border-radius: 6px;
   padding: 24px;
 }
@@ -28,23 +28,7 @@
   font-weight: 400;
 }
 
-.loginForm > input {
-  font-size: large;
-  background: none;
-  height: 50px;
-  border: 1px solid rgb(39, 39, 42);
-  border-radius: 6px;
-  padding: 10px;
-}
-
 .loginForm > button {
   height: 50px;
-  background-color: #fff;
-  color: black;
-  border-radius: 6px;
   margin-top: 30px;
-}
-
-.loginForm > button:hover {
-  cursor: pointer;
 }
