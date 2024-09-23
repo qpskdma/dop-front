@@ -1,22 +1,13 @@
 :root {
-  --background: rgb(39, 46, 56);
-  --foreground: #171717;
-  --border: none;
-  /* --border: 2px solid rgb(81, 79, 81); */
-  /* --main-color: rgb(73, 35, 112); */
-  --main-color: rgb(246, 142, 31);
-  --secondary-color: rgb(149, 85, 17);
-  --text-secondary-color: rgb(70, 72, 67);
-}
+  --background-dark: rgb(32, 39, 49);
+  --background-light: rgb(39, 46, 56);
+  --background-btn-second: rgb(69, 70, 79);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-dark: rgb(32, 39, 49);
-    --background-light: rgb(39, 46, 56);
-    /* --background: rgb(32, 39, 49);
-    --background-light: rgb(39, 46, 56); */
-    --foreground: #ededed;
-  }
+  --text-color: #c5bfbf;
+  --text-white-color: #fff;
+  // --main-color: rgb(246, 142, 31);
+  --main-color: rgb(67, 120, 234);
+  --secondary-color: rgb(255, 255, 255);
 }
 
 html,
@@ -27,8 +18,8 @@ body {
 
 body {
   font-size: 16px;
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--text-color);
+  background: var(--background-light);
   font-family: var(--font-geist-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -46,40 +37,60 @@ a {
 }
 
 button {
-  text-transform: uppercase; //без этой штуки красивее
   height: 40px;
-  font-weight: 600;
-  background-color: rgb(246, 142, 31);
-  color: rgb(255, 255, 255);
+  font-weight: 400;
+  background-color: var(--main-color);
+  color: var(--text-white-color);
   border: none;
-  border-radius: 6px;
+  border-radius: 3px;
+  transition-duration: 0.2s;
 }
 
 button:hover {
   cursor: pointer;
+  transform: scale(1.05);
 }
 
 .formInput {
   font-size: large;
   color: var(--main-color);
-  background-color: var(--background);
+  background-color: var(--background-light);
   height: 50px;
   border: 0px;
   outline: none;
   border-radius: 6px;
   padding: 10px;
-  :focus {
-    outline: var(--secondary-color);
-    border: 10px solid #fff;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.formInput:focus {
+  border: 1px solid var(--main-color);
 }
 
 .textSecondary {
   color: var(--text-secondary-color);
+}
+
+.validation-error {
+  color: red;
+}
+
+.loader {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid var(--secondary-color);
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  z-index: 1000;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -1,5 +1,5 @@
 .container {
-  background-color: var(--background-dark);
+  height: 10vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,7 +8,7 @@
 
 .logo {
   font-size: 50px;
-  margin-left: 80px;
+  // margin-left: 80px;
   span {
     color: var(--main-color);
   }
@@ -20,7 +20,6 @@
   justify-content: right;
   align-items: center;
   column-gap: 5px;
-  border-radius: 6px 8px 8px 6px;
   span {
     width: 36px;
     height: 100%;
@@ -31,10 +30,4 @@
     align-items: center;
     margin-left: 10px;
   }
-}
-
-.hr {
-  height: 2px;
-  border: 0;
-  background-color: rgb(39, 39, 42);
 }

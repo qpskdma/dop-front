@@ -1,0 +1,45 @@
+.container {
+  height: auto;
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 60px);
+  grid-template-columns: 1fr;
+  margin: 20px 70px;
+}
+
+.clients > *:nth-child(even) {
+  background-color: var(--background-dark);
+}
+
+.navTextContainer {
+  font-weight: 700;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  background-color: var(--background-dark);
+  padding: 10px;
+  div {
+    align-self: center;
+  }
+}
+
+.cardContainer {
+  // width: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 10px;
+  span {
+    align-self: center;
+  }
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: space-between;
+  button {
+    height: 40px;
+    width: 40%;
+  }
+}
+
+.deleteBtn {
+  background-color: var(--background-btn-second);
+}

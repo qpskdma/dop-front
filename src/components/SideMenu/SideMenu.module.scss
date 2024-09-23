@@ -1,0 +1,16 @@
+.container {
+  width: 15vw;
+  height: 90vh;
+  background-color: var(--background-dark);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.element {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}

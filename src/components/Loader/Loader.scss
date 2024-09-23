@@ -1,0 +1,13 @@
+.loader_container-large {
+  margin: 29vh auto auto auto;
+  text-align: center;
+  div {
+    font-size: 24px;
+    margin-top: 10px;
+    color: var(--text-secondary-color);
+  }
+  .loader {
+    width: 68px;
+    height: 68px;
+  }
+}

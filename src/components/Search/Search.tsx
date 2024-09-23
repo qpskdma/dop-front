@@ -1,19 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./Search.module.scss";
 
-interface SearchProps {}
+interface SearchProps {
+  setSearchValue: any;
+  searchValue: string;
+  setIsAddModalActive: any;
+  isAddModalActive: boolean;
+}
 
-const Search: React.FC<SearchProps> = ({}) => {
-  const [searchValue, setSearchValue] = useState("");
+const Search: React.FC<SearchProps> = ({
+  setSearchValue,
+  searchValue,
+  isAddModalActive,
+  setIsAddModalActive,
+}) => {
   const handleInputChange = (event: any) => {
     setSearchValue(event.target.value);
     console.log(searchValue);
   };
-  // useEffect(() => handleInputChange, searchValue);
+
+  const toggleModal = () => {
+    setIsAddModalActive(!isAddModalActive);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.searchContainer}>
-        {/* <img width={"16px"} height={"16px"} src="/Search.svg" alt="" /> */}
         <svg
           width="16"
           height="16"
@@ -30,11 +41,11 @@ const Search: React.FC<SearchProps> = ({}) => {
           type="search"
           placeholder="Search"
           className={styles.search}
-          // value={searchValue}
-          // onChange={(e) => handleInputChange(e)}
+          value={searchValue}
+          onInput={(e) => handleInputChange(e)}
         />
       </div>
-      <button className={styles.addBtn}>
+      <button className={styles.addBtn} onClick={() => toggleModal()}>
         Add Client <span>+</span>
       </button>
     </div>

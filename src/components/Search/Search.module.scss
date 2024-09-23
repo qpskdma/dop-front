@@ -1,5 +1,6 @@
 .container {
-  width: 99vw;
+  width: 100vw;
+  height: 5vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -45,7 +46,6 @@
   justify-content: right;
   align-items: center;
   column-gap: 5px;
-  border-radius: 6px 8px 8px 6px;
   span {
     font-size: 32px;
     font-weight: 100;

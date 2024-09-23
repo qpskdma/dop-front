@@ -1,12 +1,12 @@
 import React from "react";
-import styles from "./Loader.module.scss";
+import "./Loader.scss";
 
 interface LoaderProps {}
 
 const Loader: React.FC<LoaderProps> = ({}) => {
   return (
-    <div className={styles.container}>
-      <span className={styles.loader}></span>
+    <div className="loader_container-large">
+      <span className="loader"></span>
       <div>Loading...</div>
     </div>
   );

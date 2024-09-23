@@ -9,7 +9,7 @@
 
 .loginForm {
   width: 382px;
-  height: 388px;
+  height: auto;
   background-color: var(--background-dark);
   display: flex;
   flex-direction: column;
@@ -24,11 +24,11 @@
   margin: 0 auto;
 }
 
-.loginForm > label {
-  font-weight: 400;
+.textError {
+  color: red;
 }
 
 .loginForm > button {
   height: 50px;
-  margin-top: 30px;
+  // margin-top: 30px;
 }

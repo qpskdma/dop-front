@@ -1,6 +1,6 @@
 "use client";
 
-import LoginForm from "./LoginForm";
+import LoginForm from "./LoginForm/LoginForm";
 
 export default function Home() {
   return <LoginForm />;
