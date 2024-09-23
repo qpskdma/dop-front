@@ -11,14 +11,14 @@ interface LoginFormProps {}
 const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const [data, setData] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [textError, setTextError] = useState("");
   const router = useRouter();
 
   const handleLogin = async (event: any) => {
     event.preventDefault();
-    if (username && password) {
+    if (email && password) {
       // router.push("/admin");
       fetchData();
     } else {
@@ -28,8 +28,8 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
   async function fetchData() {
     setLoading(true);
-    let formData = new FormData();
-    formData.append("username", username);
+    const formData = new FormData();
+    formData.append("username", email);
     formData.append("password", password);
     try {
       const response = await axios.post(
@@ -58,14 +58,14 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
         <legend>Login</legend>
         <input
           className="formInput"
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Username"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
           required
           onChange={(e) => {
             setTextError("");
-            setUsername(e.target.value);
+            setEmail(e.target.value);
           }}
         />
         <input

@@ -11,6 +11,7 @@
 }
 
 .navTextContainer {
+  position: sticky;
   font-weight: 700;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
