@@ -24,7 +24,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
       <span>{getCreationTime(creationTime)}</span>
       <span>{getLastSession(lastSession)}</span>
       <div className={styles.btnContainer}>
-        <button onClick={() => getConfig(name)}>"Get config"</button>
+        <button onClick={() => getConfig(name)}>Get config</button>
         <button
           className={styles.deleteBtn}
           onClick={() => openDeletionModal(name)}

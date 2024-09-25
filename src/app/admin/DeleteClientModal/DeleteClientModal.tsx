@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./DeleteClientModal.module.scss";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { store } from "@/../store/store";
+import rest from "../../../../services/rest";
 
 interface DeleteClientModalProps {
   deleteClientName: string;
@@ -13,10 +16,16 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
 }) => {
   const [isLoading, setLoading] = useState(false);
 
+  const token = useSelector((state: any) => state.auth.token);
+  useEffect(() => {
+    store.subscribe(() => console.log(token));
+  }, [store]);
+  console.log(token);
+
   async function deleteClient() {
     setLoading(true);
     try {
-      await axios.get("https://api.dopserver.ru/api/mikrotik/wg/del_client", {
+      await rest.get("/api/mikrotik/wg/del_client", {
         params: {
           name: "vpn.dopserver.ru",
           remove: true,
@@ -40,7 +49,6 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
         </div>
         <div className={styles.btns}>
           <button onClick={() => deleteClient()}>
-            {" "}
             {isLoading ? <span className="loader"></span> : "Yes"}
           </button>
           <button

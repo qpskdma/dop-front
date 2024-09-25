@@ -1,23 +1,20 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 import { useRouter } from "next/navigation";
 import styles from "./LoginForm.module.scss";
 import "@/components/Loader/Loader.scss";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/../store/store";
+import { useDispatch } from "react-redux";
 import { setToken } from "@/../store/authSlice";
+import rest from "../../../services/rest";
 
 interface LoginFormProps {}
 
 const LoginForm: React.FC<LoginFormProps> = ({}) => {
-  const [data, setData] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [textError, setTextError] = useState("");
   const router = useRouter();
-
-  // const token = useSelector((state: RootState) => state.auth.token);
   const dispatch = useDispatch();
 
   async function handleLogin(event: React.MouseEvent<HTMLButtonElement>) {
@@ -31,19 +28,16 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
     formData.append("username", email);
     formData.append("password", password);
     try {
-      const response = await axios.post(
-        "https://api.dopserver.ru/auth/login",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
-      console.log(useDispatch);
-      console.log(dispatch);
-      console.log(response.data["access_token"]);
+      const response = await rest.post("/auth/login", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+      rest.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+        config.headers.Authorization = `Bearer ${response.data["access_token"]}`;
+        return config;
+      });
       dispatch(setToken(response.data["access_token"]));
       router.push("/admin");
     } catch (error) {

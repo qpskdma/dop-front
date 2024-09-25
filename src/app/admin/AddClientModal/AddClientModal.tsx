@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from "react";
-import ReactDOM from "react-dom";
-import axios from "axios";
 import styles from "./AddClientModal.module.scss";
+import rest from "../../../../services/rest";
 
 interface AddClientModalProps {
   closeAddClientModal: any;
@@ -34,8 +33,8 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
     } else {
       setLoading(true);
       try {
-        await axios.post(
-          "https://api.dopserver.ru/api/mikrotik/wg/add_vpn_client",
+        await rest.post(
+          "/api/mikrotik/wg/add_vpn_client",
           {},
           {
             params: {

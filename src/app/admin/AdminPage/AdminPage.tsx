@@ -9,6 +9,7 @@ import AddClientModal from "../AddClientModal/AddClientModal";
 import DeleteClientModal from "../DeleteClientModal/DeleteClientModal";
 import { useSelector } from "react-redux";
 import { store } from "@/../store/store";
+import rest from "../../../../services/rest";
 
 interface Data {
   comment: string;
@@ -35,8 +36,8 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
 
   async function fetchData() {
     try {
-      const response = await axios.get(
-        "https://api.dopserver.ru/api/mikrotik/wg/get_clients?name=vpn.dopserver.ru"
+      const response = await rest.get(
+        "/api/mikrotik/wg/get_clients?name=vpn.dopserver.ru"
       );
       setData(response.data);
     } catch (error) {
@@ -62,6 +63,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
 
   const closeAddClientModal = (elementAdded: boolean) => {
     setIsAddModalActive(false);
+    setAddValue("");
     elementAdded && fetchData();
   };
 

@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./Header.module.scss";
-import { useRouter } from "next/navigation";
 import Sidebar from "../Sidebar/Sidebar";
 
 interface HeaderProps {}
@@ -9,10 +8,6 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = ({}) => {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
 
-  const router = useRouter();
-  const toExit = () => {
-    router.back();
-  };
   return (
     <>
       {isSidebarActive ? (
@@ -31,13 +26,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
         <h1 className={styles.logo}>
           D<span>O</span>P
         </h1>
-        {/* нужно чтобы кнопка отображалась в зависимости от того выполнен ли вход */}
-        <button className={styles.exitBtn} onClick={() => toExit()}>
-          Logout
-          <span>
-            <img src="/Exit.svg" alt="" />
-          </span>
-        </button>
+        <div></div>
       </header>
     </>
   );
