@@ -1,0 +1,84 @@
+.closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.closeBtn:hover {
+  cursor: pointer;
+}
+
+.container {
+  width: 17%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--background-dark);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 10px;
+  .user {
+    padding-top: 20px;
+    width: 13vw;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: 15px;
+  }
+}
+
+.container.opened {
+  animation: open 0.5s ease-in-out;
+}
+
+.container.closed {
+  animation: close 0.5s ease-in-out;
+}
+
+.element {
+  color: var(--text-white-color);
+  width: 13vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  column-gap: 15px;
+
+  //нижнее убрать когда появятся другие страницы в меню
+  background-color: var(--main-color);
+  border-radius: 6px;
+  padding: 5px 15px;
+}
+
+.unactivePage {
+  padding: 5px;
+}
+
+.activePage {
+  background-color: var(--main-color);
+  border-radius: 6px;
+  padding: 5px 15px;
+}
+
+@keyframes open {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes close {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

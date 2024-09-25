@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
 import styles from "./LoginForm.module.scss";
 import "@/components/Loader/Loader.scss";
-import Loader from "@/components/Loader/Loader";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/../store/store";
+import { setToken } from "@/../store/authSlice";
 
 interface LoginFormProps {}
 
@@ -16,17 +17,15 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const [textError, setTextError] = useState("");
   const router = useRouter();
 
-  const handleLogin = async (event: any) => {
-    event.preventDefault();
-    if (email && password) {
-      // router.push("/admin");
-      fetchData();
-    } else {
-      setTextError("Enter data");
-    }
-  };
+  // const token = useSelector((state: RootState) => state.auth.token);
+  const dispatch = useDispatch();
 
-  async function fetchData() {
+  async function handleLogin(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    if (!email || !password) {
+      setTextError("Enter data");
+      return;
+    }
     setLoading(true);
     const formData = new FormData();
     formData.append("username", email);
@@ -42,7 +41,10 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
           },
         }
       );
-      setData(response.data["access_token"]);
+      console.log(useDispatch);
+      console.log(dispatch);
+      console.log(response.data["access_token"]);
+      dispatch(setToken(response.data["access_token"]));
       router.push("/admin");
     } catch (error) {
       setTextError("Incorrect login details");

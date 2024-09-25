@@ -1,37 +1,38 @@
-//добавить фильтрацию клиентов по символам и времени последней сессии и добавления
-
 import React, { useState } from "react";
 import styles from "./ClientCard.module.scss";
-import getCreationTime from "../getCreationTime";
-import getLastSession from "../getLastSessionTime";
+import getCreationTime from "./getCreationTime";
+import getLastSession from "./getLastSessionTime";
 
 interface ClientCardProps {
   name: string;
   creationTime: number;
   lastSession: number;
+  getConfig: Function;
+  openDeletionModal: Function;
 }
 
 const ClientCard: React.FC<ClientCardProps> = ({
   name,
   creationTime,
   lastSession,
+  getConfig,
+  openDeletionModal,
 }) => {
   return (
-    <div className={styles.cardContainer}>
-      <div className={styles.textWrapper}>
-        <span className={styles.name}>{name} </span>
-      </div>
-      <div className={styles.textWrapper}>
-        <span>{getCreationTime(creationTime)}</span>
-      </div>
-      <div className={styles.textWrapper}>
-        <span>{getLastSession(lastSession)}</span>
-      </div>
+    <>
+      <span className={styles.name}>{name} </span>
+      <span>{getCreationTime(creationTime)}</span>
+      <span>{getLastSession(lastSession)}</span>
       <div className={styles.btnContainer}>
-        <button className={styles.getConfigBtn}>Get config</button>
-        <button className={styles.deleteBtn}>Delete client</button>
+        <button onClick={() => getConfig(name)}>"Get config"</button>
+        <button
+          className={styles.deleteBtn}
+          onClick={() => openDeletionModal(name)}
+        >
+          Delete client
+        </button>
       </div>
-    </div>
+    </>
   );
 };
 

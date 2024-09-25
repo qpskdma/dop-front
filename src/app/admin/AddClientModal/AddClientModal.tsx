@@ -49,6 +49,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
         console.error("Error fetching data: ", error);
       } finally {
         setLoading(false);
+        setAddValue("");
       }
     }
   }

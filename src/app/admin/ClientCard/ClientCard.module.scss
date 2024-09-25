@@ -1,32 +1,30 @@
+.page {
+  width: 100%;
+}
+
 .container {
-  height: auto;
   display: grid;
   grid-template-rows: repeat(auto-fill, 60px);
   grid-template-columns: 1fr;
   margin: 20px 70px;
-}
-
-.clients > *:nth-child(even) {
-  background-color: var(--background-dark);
+  > *:nth-child(odd) {
+    background-color: var(--background-dark);
+  }
+  > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 10px;
+  }
 }
 
 .navTextContainer {
-  position: sticky;
-  font-weight: 700;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  background-color: var(--background-dark);
-  padding: 10px;
+  font-weight: 800;
   div {
     align-self: center;
   }
 }
 
 .cardContainer {
-  // width: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  padding: 10px;
   span {
     align-self: center;
   }
@@ -38,6 +36,7 @@
   button {
     height: 40px;
     width: 40%;
+    min-width: 100px;
   }
 }
 
