@@ -4,24 +4,14 @@ import styles from "./Search.module.scss";
 interface SearchProps {
   setSearchValue: any;
   searchValue: string;
-  setIsAddModalActive: any;
-  isAddModalActive: boolean;
 }
 
-const Search: React.FC<SearchProps> = ({
-  setSearchValue,
-  searchValue,
-  isAddModalActive,
-  setIsAddModalActive,
-}) => {
+const Search: React.FC<SearchProps> = ({ setSearchValue, searchValue }) => {
   const handleInputChange = (event: any) => {
     setSearchValue(event.target.value);
     console.log(searchValue);
   };
 
-  const toggleModal = () => {
-    setIsAddModalActive(!isAddModalActive);
-  };
   return (
     <div className={styles.container}>
       <div className={styles.searchContainer}>
@@ -45,9 +35,6 @@ const Search: React.FC<SearchProps> = ({
           onInput={(e) => handleInputChange(e)}
         />
       </div>
-      <button className={styles.addBtn} onClick={() => toggleModal()}>
-        Add Client <span>+</span>
-      </button>
     </div>
   );
 };

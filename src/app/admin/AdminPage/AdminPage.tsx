@@ -1,45 +1,43 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import fileSaver from "file-saver";
 import ClientCard from "../ClientCard/ClientCard";
 import Search from "@/components/Search/Search";
-import styles from "../ClientCard/ClientCard.module.scss";
+import styles from "../AdminPage/AdminPage.module.scss";
 import Loader from "@/components/Loader/Loader";
 import AddClientModal from "../AddClientModal/AddClientModal";
 import DeleteClientModal from "../DeleteClientModal/DeleteClientModal";
-import { useSelector } from "react-redux";
-import { store } from "@/../store/store";
 import rest from "../../../../services/rest";
-
-interface Data {
-  comment: string;
-  "last-handshake": number;
-  time_create: number;
-}
+import DropdownServers from "@/components/DropdownServers/DropdownServers";
+import { Server } from "http";
+import { Config, GetClientsResponse } from "../../../../services/types";
 
 interface AdminPageProps {}
 
 const AdminPage: React.FC<AdminPageProps> = ({}) => {
-  const [data, setData] = useState<Array<Data>>([]);
+  const [clientsResponse, setClientsResponse] = useState<GetClientsResponse>(
+    {} as GetClientsResponse
+  );
   const [isLoading, setLoading] = useState(true);
+  const [servers, setServers] = useState([] as Server[]);
+  const [activeServer, setActiveServer] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [addValue, setAddValue] = useState("");
   const [isAddModalActive, setIsAddModalActive] = useState(false);
-  const [deleteClientName, setdeleteClientName] = useState("");
+  const [deleteConfig, setDeleteConfig] = useState<Config>();
   const [isDeletionModalActive, setIsDeletionModalActive] = useState(false);
 
-  const token = useSelector((state: any) => state.auth.token);
-  store.subscribe(() => console.log(token));
-  useEffect(() => {
-    store.subscribe(() => console.log(token));
-  }, [store]);
-
   async function fetchData() {
+    if (!activeServer) return;
     try {
       const response = await rest.get(
-        "/api/mikrotik/wg/get_clients?name=vpn.dopserver.ru"
+        `/api/vpn/wg_easy/admin/get_all_clients`,
+        {
+          params: {
+            region: activeServer,
+          },
+        }
       );
-      setData(response.data);
+      setClientsResponse(response.data);
     } catch (error) {
       console.error("Error fetching data: ", error);
     } finally {
@@ -47,17 +45,35 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
     }
   }
 
-  useEffect(() => {
-    fetchData();
+  useEffect((): any => {
+    async function getServices(): Promise<void> {
+      try {
+        const response = await rest.get(
+          "/api/vpn/wg_easy/admin/get_all_servers"
+        );
+        setServers(response.data);
+        response.data ? setActiveServer(response.data[0].region) : undefined;
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      } finally {
+      }
+    }
+    getServices();
   }, []);
 
-  const filterData = data.filter((element: Data) =>
-    element.comment.toLowerCase().includes(searchValue.toLowerCase())
+  useEffect(() => {
+    fetchData();
+  }, [activeServer]);
+
+  const filterData = clientsResponse.data?.configs.filter((element: Config) =>
+    element.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const isUsernameTaken = () => {
     return (
-      data.filter((element: Data) => element.comment == addValue).length > 0
+      clientsResponse.data.configs.filter(
+        (element: Config) => element.name == addValue
+      ).length > 0
     );
   };
 
@@ -72,24 +88,28 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
     elementRemoved && fetchData();
   };
 
-  const openDeletionModal = (clientName: string) => {
+  const openDeletionModal = (config: Config) => {
     setIsDeletionModalActive(true);
-    setdeleteClientName(clientName);
+    setDeleteConfig(config);
   };
 
-  const getConfig = async (clientName: string) => {
+  const changeServer = (server: string) => {
+    setActiveServer(server);
+    fetchData();
+  };
+
+  const getConfig = async (config: Config) => {
     try {
-      const response = await axios
-        .get("https://api.dopserver.ru/api/mikrotik/wg/get_vpn_config_client", {
+      const response = await rest
+        .get("/api/vpn/wg_easy/user/get_user_config", {
           params: {
-            name: "vpn.dopserver.ru",
-            comment: clientName,
+            id: config.id,
             type: "config",
-            responseType: "blob",
+            region: activeServer,
           },
         })
         .then((response) => {
-          fileSaver.saveAs(new Blob([response.data]), `${clientName}.conf`);
+          fileSaver.saveAs(new Blob([response.data]), `${config.name}.conf`);
         });
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -100,6 +120,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
     <div className={styles.page}>
       {isAddModalActive && (
         <AddClientModal
+          activeServer={activeServer}
           closeAddClientModal={closeAddClientModal}
           isUsernameTaken={isUsernameTaken}
           setAddValue={setAddValue}
@@ -108,16 +129,25 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
       )}
       {isDeletionModalActive ? (
         <DeleteClientModal
-          deleteClientName={deleteClientName}
+          activeServer={activeServer}
+          config={deleteConfig}
           closeDeletionModal={closeDeletionModal}
         />
       ) : null}
-      <Search
-        setSearchValue={setSearchValue}
-        searchValue={searchValue}
-        isAddModalActive={isAddModalActive}
-        setIsAddModalActive={setIsAddModalActive}
-      />
+      <div className={styles.searchContainer}>
+        <DropdownServers
+          servers={servers}
+          activeServer={activeServer}
+          changeServer={changeServer}
+        />
+        <Search setSearchValue={setSearchValue} searchValue={searchValue} />
+        <button
+          className={styles.addBtn}
+          onClick={() => setIsAddModalActive(!isAddModalActive)}
+        >
+          Add Client <span>+</span>
+        </button>
+      </div>
       <div className={styles.container}>
         <div className={styles.navTextContainer}>
           <div>Comment</div>
@@ -130,12 +160,10 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
             <Loader />
           </span>
         ) : null}
-        {filterData.map((item, index) => (
+        {filterData?.map((item, index) => (
           <div key={index} className={styles.cardContainer}>
             <ClientCard
-              name={item["comment"]}
-              creationTime={item["time_create"]}
-              lastSession={item["last-handshake"]}
+              config={item}
               getConfig={getConfig}
               openDeletionModal={openDeletionModal}
             />

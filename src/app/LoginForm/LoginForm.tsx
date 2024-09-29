@@ -34,12 +34,9 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
           "Access-Control-Allow-Origin": "*",
         },
       });
-      rest.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-        config.headers.Authorization = `Bearer ${response.data["access_token"]}`;
-        return config;
-      });
+      localStorage.setItem("token", response.data["access_token"]);
       dispatch(setToken(response.data["access_token"]));
-      router.push("/admin");
+      router.push("/admin/clients");
     } catch (error) {
       setTextError("Incorrect login details");
       console.error("Error fetching data: ", error);

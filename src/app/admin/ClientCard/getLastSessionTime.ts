@@ -1,4 +1,4 @@
-const getLastSession = (seconds: number): string => {
+const getLastSession = (seconds: number | null): string => {
   if (!seconds) {
     // setOnline(true);
     return " never";

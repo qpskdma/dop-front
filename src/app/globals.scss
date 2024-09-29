@@ -6,7 +6,6 @@
 
   --text-color: #c5bfbf;
   --text-white-color: #fff;
-  // --main-color: rgb(246, 142, 31);
   --main-color: rgb(67, 120, 234);
   --secondary-color: rgb(255, 255, 255);
 }
@@ -54,7 +53,7 @@ button:hover {
 
 .formInput {
   font-size: large;
-  color: var(--main-color);
+  color: var(--text-color);
   background-color: var(--background-light);
   height: 50px;
   border: 0px;
@@ -65,10 +64,6 @@ button:hover {
 
 .formInput:focus {
   border: 1px solid var(--main-color);
-}
-
-.textSecondary {
-  color: var(--text-secondary-color);
 }
 
 .validation-error {

@@ -9,26 +9,27 @@
 }
 
 .container {
-  width: 17%;
+  position: absolute;
+  width: 250px;
   height: 100%;
   top: 0;
   left: 0;
+  z-index: 1000;
   background-color: var(--background-dark);
-  position: absolute;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   padding: 10px;
   .user {
-    padding-top: 20px;
-    width: 13vw;
+    width: 210px;
     height: 100px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     column-gap: 15px;
+    padding: 5px 9px;
   }
 }
 
@@ -40,29 +41,28 @@
   animation: close 0.5s ease-in-out;
 }
 
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 10px;
+}
+
 .element {
   color: var(--text-white-color);
-  width: 13vw;
+  width: 210px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   column-gap: 15px;
-
-  //нижнее убрать когда появятся другие страницы в меню
-  background-color: var(--main-color);
-  border-radius: 6px;
   padding: 5px 15px;
 }
 
-.unactivePage {
-  padding: 5px;
-}
-
-.activePage {
+.active {
   background-color: var(--main-color);
   border-radius: 6px;
-  padding: 5px 15px;
 }
 
 @keyframes open {

@@ -3,6 +3,7 @@ import styles from "./AddClientModal.module.scss";
 import rest from "../../../../services/rest";
 
 interface AddClientModalProps {
+  activeServer: string;
   closeAddClientModal: any;
   isUsernameTaken: any;
   setAddValue: Function;
@@ -10,7 +11,8 @@ interface AddClientModalProps {
 }
 
 const AddClientModal: React.FC<AddClientModalProps> = ({
-  closeAddClientModal: closeAddClientModal,
+  activeServer,
+  closeAddClientModal,
   isUsernameTaken,
   setAddValue,
   addValue,
@@ -34,12 +36,12 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
       setLoading(true);
       try {
         await rest.post(
-          "/api/mikrotik/wg/add_vpn_client",
+          "/api/vpn/wg_easy/user/add_vpn_client_to_server",
           {},
           {
             params: {
-              name: "vpn.dopserver.ru",
-              comment: addValue,
+              region: activeServer,
+              name: addValue,
             },
           }
         );

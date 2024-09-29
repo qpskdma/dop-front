@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Sidebar.module.scss";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface SideMenuProps {
   isSidebarActive: boolean;
@@ -11,6 +13,8 @@ const Sidebar: React.FC<SideMenuProps> = ({
   setIsSidebarActive,
 }) => {
   const [closeAnim, setCloseAnim] = useState(false);
+
+  const pathname = usePathname();
 
   return (
     <>
@@ -31,10 +35,22 @@ const Sidebar: React.FC<SideMenuProps> = ({
           <img src="/User.svg" alt="" />
           <div>User228</div>
         </div>
-        <ul>
-          <li className={styles.element}>
-            <img src="/Home.svg" alt="" width={"32px"} height={"32px"} />
-            <a href="/">Home</a>
+        <ul className={styles.listWrapper}>
+          <li
+            className={`${styles.element} ${
+              pathname == "/admin/clients" ? styles.active : ""
+            }`}
+          >
+            <img src="/Users.svg" alt="" />
+            <Link href="/admin/clients">Clients</Link>
+          </li>
+          <li
+            className={`${styles.element} ${
+              pathname == "/admin/servers" ? styles.active : ""
+            }`}
+          >
+            <img src="/Server.svg" alt="" />
+            <Link href="/admin/servers">Servers</Link>
           </li>
         </ul>
       </nav>
