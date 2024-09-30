@@ -24,7 +24,7 @@ const DropdownServers: React.FC<DropdownServersProps> = ({
       <div className={styles.container}>
         <div className={styles.text}>
           <p>{activeServer ? activeServer : "Unknown"}</p>
-          <img src="./ArrowDown.svg" alt="" />
+          <img src="/ArrowDown.svg" alt="" />
         </div>
         <div className={styles.content}>
           {servers?.map((el, index) => (
