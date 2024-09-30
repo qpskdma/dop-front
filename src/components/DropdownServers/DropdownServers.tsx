@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./DropdownServers.module.scss";
 
 interface DropdownServersProps {
-  servers: Array<Server> | undefined;
+  servers: unknown | Server[];
   activeServer: string | undefined;
   changeServer: Function;
 }
@@ -24,10 +24,10 @@ const DropdownServers: React.FC<DropdownServersProps> = ({
       <div className={styles.container}>
         <div className={styles.text}>
           <p>{activeServer ? activeServer : "Unknown"}</p>
-          <img src="./ArrowDown.svg" alt="" />
+          <img src="/ArrowDown.svg" alt="" />
         </div>
         <div className={styles.content}>
-          {servers?.map((el, index) => (
+          {(servers as Server[])?.map((el: Server, index: number) => (
             <p key={index} onClick={() => changeServer(el.region)}>
               {el.name} – {el.region}
             </p>

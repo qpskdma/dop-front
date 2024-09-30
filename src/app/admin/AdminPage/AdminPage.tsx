@@ -136,7 +136,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
       ) : null}
       <div className={styles.searchContainer}>
         <DropdownServers
-          servers={servers}
+          servers={servers as unknown}
           activeServer={activeServer}
           changeServer={changeServer}
         />
