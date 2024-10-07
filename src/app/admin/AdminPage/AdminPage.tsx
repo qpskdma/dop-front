@@ -10,13 +10,24 @@ import rest from "../../../../services/rest";
 import DropdownServers from "@/components/DropdownServers/DropdownServers";
 import { Server } from "http";
 import { Config, GetClientsResponse } from "../../../../services/types";
+import { Tooltip } from "react-tooltip";
+// import { useRouter } from "next/router";
+import Utils from "../../../../services/utils";
+import { Axios, AxiosError } from "axios";
 
 interface AdminPageProps {}
 
 const AdminPage: React.FC<AdminPageProps> = ({}) => {
+  // const router = useRouter();
+
   const [clientsResponse, setClientsResponse] = useState<GetClientsResponse>(
     {} as GetClientsResponse
   );
+
+  const [sortField, setSortField] = useState<keyof Config>("createdAt");
+  const [sortCreateATDirection, setSortCreateADirection] = useState(true);
+  const [sortLastSessionDirection, setSortLastSessionDirection] =
+    useState(true);
   const [isLoading, setLoading] = useState(true);
   const [servers, setServers] = useState([] as Server[]);
   const [activeServer, setActiveServer] = useState("");
@@ -39,6 +50,11 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
       );
       setClientsResponse(response.data);
     } catch (error) {
+      // console.log("400");
+      // if (error instanceof AxiosError && error.response?.status === 401) {
+      //   window.location.href = "/";
+      //   console.log("401");
+      // }
       console.error("Error fetching data: ", error);
     } finally {
       setLoading(false);
@@ -53,8 +69,6 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
         );
         setServers(response.data);
         response.data ? setActiveServer(response.data[0].region) : undefined;
-      } catch (error) {
-        console.error("Error fetching data: ", error);
       } finally {
       }
     }
@@ -65,9 +79,13 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
     fetchData();
   }, [activeServer]);
 
-  const filterData = clientsResponse.data?.configs.filter((element: Config) =>
+  const filteredData = clientsResponse.data?.configs.filter((element: Config) =>
     element.name.toLowerCase().includes(searchValue.toLowerCase())
   );
+
+  const sortedFilteredData =
+    filteredData &&
+    Utils.sortArrayByField(filteredData, sortField, sortCreateATDirection);
 
   const isUsernameTaken = () => {
     return (
@@ -100,7 +118,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
 
   const getConfig = async (config: Config) => {
     try {
-      const response = await rest
+      await rest
         .get("/api/vpn/wg_easy/user/get_user_config", {
           params: {
             id: config.id,
@@ -116,6 +134,26 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
     } finally {
     }
   };
+
+  const getQR = async (config: Config) => {
+    try {
+      await rest
+        .get("/api/vpn/wg_easy/user/get_user_config", {
+          params: {
+            id: config.id,
+            type: "qr",
+            region: activeServer,
+          },
+        })
+        .then((response) => {
+          fileSaver.saveAs(new Blob([response.data]), `${config.name}.png`);
+        });
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    } finally {
+    }
+  };
+
   return (
     <div className={styles.page}>
       {isAddModalActive && (
@@ -150,9 +188,41 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
       </div>
       <div className={styles.container}>
         <div className={styles.navTextContainer}>
-          <div>Comment</div>
-          <div>Create Time</div>
-          <div>Last Session</div>
+          <div>User</div>
+          <div
+            className={styles.sortElement}
+            data-tooltip-id="sortByCreation"
+            data-tooltip-content="Sort by creation time"
+            data-tooltip-place="top"
+            onClick={() => {
+              setSortField("createdAt");
+              setSortCreateADirection(!sortCreateATDirection);
+            }}
+          >
+            Create Time
+            {sortCreateATDirection ? (
+              <img src="/SortUp.svg"></img>
+            ) : (
+              <img src="/SortDown.svg"></img>
+            )}
+          </div>
+          <div
+            className={styles.sortElement}
+            data-tooltip-id="sortByLastSession"
+            data-tooltip-content="Sort by last session time"
+            data-tooltip-place="top"
+            onClick={() => {
+              setSortField("latestHandshakeAt");
+              setSortLastSessionDirection(!sortLastSessionDirection);
+            }}
+          >
+            Last Session
+            {sortLastSessionDirection ? (
+              <img src="/SortUp.svg"></img>
+            ) : (
+              <img src="/SortDown.svg"></img>
+            )}
+          </div>
           <div>Actions</div>
         </div>
         {isLoading ? (
@@ -160,16 +230,19 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
             <Loader />
           </span>
         ) : null}
-        {filterData?.map((item, index) => (
+        {sortedFilteredData?.map((item, index) => (
           <div key={index} className={styles.cardContainer}>
             <ClientCard
               config={item}
               getConfig={getConfig}
+              getQR={getQR}
               openDeletionModal={openDeletionModal}
             />
           </div>
         ))}
       </div>
+      <Tooltip id="sortByCreation" />
+      <Tooltip id="sortByLastSession" />
     </div>
   );
 };
