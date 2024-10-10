@@ -1,40 +1,10 @@
-.container {
-  position: fixed;
-  display: flex;
-  z-index: 9998;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.wrapper {
+.form {
+  width: 400px;
   margin: auto;
-  width: 500px;
-  height: auto;
-  min-height: 90px;
-  background-color: var(--background-dark);
-  border-radius: 10px;
-  .closeBtn {
-    transform: scaleX(-1);
-
-    img {
-      padding: 2px;
-    }
-  }
-
-  img:hover {
-    cursor: pointer;
-  }
-
-  .form {
-    margin: auto;
-    margin-top: -30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    // row-gap: 15px;
-    padding: 24px;
-    button {
-      margin-top: 15px;
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  button {
+    margin-top: 15px;
   }
 }

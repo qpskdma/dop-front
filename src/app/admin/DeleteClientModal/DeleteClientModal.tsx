@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { store } from "@/../store/store";
 import rest from "../../../../services/rest";
 import { Config } from "../../../../services/types";
+import Modal from "@/components/Modal/Modal";
 
 interface DeleteClientModalProps {
   activeServer: string;
@@ -18,14 +19,6 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
   closeDeletionModal,
 }) => {
   const [isLoading, setLoading] = useState(false);
-
-  const token = localStorage.getItem("token");
-
-  // const token = useSelector((state: any) => state.auth.token);
-  // useEffect(() => {
-  //   store.subscribe(() => console.log(token));
-  // }, [store]);
-  // console.log(token);
 
   async function deleteClient() {
     setLoading(true);
@@ -45,25 +38,18 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.wrapper}>
-        <div className={styles.text}>
-          Are you sure you want to delete
-          <span className={styles.clientName}> {config?.name}</span>?
-        </div>
-        <div className={styles.btns}>
-          <button onClick={() => deleteClient()}>
-            {isLoading ? <span className="loader"></span> : "Yes"}
-          </button>
-          <button
-            className={styles.deleteBtn}
-            onClick={() => closeDeletionModal()}
-          >
-            No
-          </button>
-        </div>
+    <Modal closeModal={closeDeletionModal}>
+      <div className={styles.text}>
+        Are you sure you want to delete
+        <span className={styles.clientName}> {config?.name}</span>?
       </div>
-    </div>
+      <div className={styles.btns}>
+        <button className="deleteBtn" onClick={() => deleteClient()}>
+          {isLoading ? <span className="loader"></span> : "Yes"}
+        </button>
+        <button onClick={() => closeDeletionModal()}>No</button>
+      </div>
+    </Modal>
   );
 };
 

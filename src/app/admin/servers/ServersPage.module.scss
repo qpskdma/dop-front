@@ -1,0 +1,18 @@
+.serverWrapper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 10px;
+  div {
+    text-align: center;
+    align-self: center;
+  }
+}
+
+.searchContainer {
+  height: 5vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 25px 200px 10px 200px;
+  justify-items: end;
+}

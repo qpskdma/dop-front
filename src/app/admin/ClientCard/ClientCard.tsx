@@ -23,7 +23,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
       <span className={styles.name}>{config.name} </span>
       <span>{getCreationTime(config.createdAt)}</span>
       <span>{getLastSession(config.latestHandshakeAt)}</span>
-      <div className={styles.btnContainer}>
+      <div className="tableBtnContainer">
         <div>
           <button
             data-tooltip-id="qr"
@@ -47,7 +47,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
           data-tooltip-id="delete"
           data-tooltip-content="Delete"
           data-tooltip-place="bottom"
-          className={styles.deleteBtn}
+          className="deleteBtn"
           onClick={() => openDeletionModal(config)}
         >
           <img width={"32px"} height={"32px"} src="/Delete.svg" alt="" />

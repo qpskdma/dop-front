@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./Sidebar.module.scss";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -13,16 +13,24 @@ const Sidebar: React.FC<SideMenuProps> = ({
   setIsSidebarActive,
 }) => {
   const [closeAnim, setCloseAnim] = useState(false);
+  const containerRef = useRef(null);
 
   const pathname = usePathname();
+
+  const handleMouseLeave = () => {
+    setCloseAnim(true);
+    return setTimeout(() => setIsSidebarActive(false), 400);
+  };
 
   return (
     <>
       <nav
         className={`${styles.container} ${isSidebarActive && styles.opened}
         ${closeAnim && styles.closed}`}
+        ref={containerRef}
+        onMouseLeave={handleMouseLeave}
       >
-        <img
+        {/* <img
           className={styles.closeBtn}
           src="/CloseBtn.svg"
           alt=""
@@ -30,27 +38,33 @@ const Sidebar: React.FC<SideMenuProps> = ({
             setCloseAnim(true);
             return setTimeout(() => setIsSidebarActive(false), 400);
           }}
-        />
+        /> */}
         <div className={styles.user}>
           <img src="/User.svg" alt="" />
           <div>User228</div>
         </div>
         <ul className={styles.listWrapper}>
-          <li
-            className={`${styles.element} ${
-              pathname == "/admin/clients" ? styles.active : ""
-            }`}
-          >
-            <img src="/Users.svg" alt="" />
-            <Link href="/admin/clients">Clients</Link>
+          <li>
+            <Link
+              href="/admin/clients"
+              className={`${styles.element} ${
+                pathname == "/admin/clients" ? styles.active : ""
+              }`}
+            >
+              <img src="/Users.svg" alt="" />
+              Clients
+            </Link>
           </li>
-          <li
-            className={`${styles.element} ${
-              pathname == "/admin/servers" ? styles.active : ""
-            }`}
-          >
-            <img src="/Server.svg" alt="" />
-            <Link href="/admin/servers">Servers</Link>
+          <li>
+            <Link
+              href="/admin/servers"
+              className={`${styles.element} ${
+                pathname == "/admin/servers" ? styles.active : ""
+              }`}
+            >
+              <img src="/Server.svg" alt="" />
+              Servers
+            </Link>
           </li>
         </ul>
       </nav>

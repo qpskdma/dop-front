@@ -22,3 +22,16 @@ export interface GetClientsResponse {
   message: string;
   data: Data;
 }
+
+export enum Region {
+  GER = "ger",
+  SWE = "swe",
+}
+
+export interface Server {
+  id: number;
+  name: string;
+  ip: string;
+  port: number;
+  region: Region;
+}

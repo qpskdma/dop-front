@@ -11,19 +11,14 @@ import DropdownServers from "@/components/DropdownServers/DropdownServers";
 import { Server } from "http";
 import { Config, GetClientsResponse } from "../../../../services/types";
 import { Tooltip } from "react-tooltip";
-// import { useRouter } from "next/router";
 import Utils from "../../../../services/utils";
-import { Axios, AxiosError } from "axios";
 
 interface AdminPageProps {}
 
 const AdminPage: React.FC<AdminPageProps> = ({}) => {
-  // const router = useRouter();
-
   const [clientsResponse, setClientsResponse] = useState<GetClientsResponse>(
     {} as GetClientsResponse
   );
-
   const [sortField, setSortField] = useState<keyof Config>("createdAt");
   const [sortCreateATDirection, setSortCreateADirection] = useState(true);
   const [sortLastSessionDirection, setSortLastSessionDirection] =
@@ -50,11 +45,6 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
       );
       setClientsResponse(response.data);
     } catch (error) {
-      // console.log("400");
-      // if (error instanceof AxiosError && error.response?.status === 401) {
-      //   window.location.href = "/";
-      //   console.log("401");
-      // }
       console.error("Error fetching data: ", error);
     } finally {
       setLoading(false);
@@ -180,7 +170,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
         />
         <Search setSearchValue={setSearchValue} searchValue={searchValue} />
         <button
-          className={styles.addBtn}
+          className="addBtn"
           onClick={() => setIsAddModalActive(!isAddModalActive)}
         >
           Add Client <span>+</span>

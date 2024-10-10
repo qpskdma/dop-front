@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import styles from "./AddClientModal.module.scss";
 import rest from "../../../../services/rest";
+import Modal from "@/components/Modal/Modal";
 
 interface AddClientModalProps {
   activeServer: string;
@@ -56,38 +57,21 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
   }
 
   return (
-    <>
-      <div
-        className={styles.container}
-        onClick={() => closeAddClientModal(false)}
-      >
-        <div
-          className={styles.wrapper}
-          onClick={(event) => event.stopPropagation()}
-        >
-          <div className={styles.closeBtn}>
-            <img
-              src="/CloseBtn.svg"
-              alt=""
-              onClick={() => closeAddClientModal(false)}
-            />
-          </div>
-          <span className={styles.form}>
-            <input
-              type="text"
-              className="formInput"
-              placeholder="Username"
-              value={addValue}
-              onInput={(e) => handleInputChange(e)}
-            />
-            <span className="validation-error">{usernameError}</span>
-            <button onClick={() => createClient()}>
-              {isLoading ? <span className="loader"></span> : "Add Client"}
-            </button>
-          </span>
-        </div>
-      </div>
-    </>
+    <Modal closeModal={closeAddClientModal}>
+      <span className={styles.form}>
+        <input
+          type="text"
+          className="formInput"
+          placeholder="Username"
+          value={addValue}
+          onInput={(e) => handleInputChange(e)}
+        />
+        <span className="validation-error">{usernameError}</span>
+        <button onClick={() => createClient()}>
+          {isLoading ? <span className="loader"></span> : "Add Client"}
+        </button>
+      </span>
+    </Modal>
   );
 };
 

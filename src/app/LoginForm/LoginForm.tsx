@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import axios, { InternalAxiosRequestConfig } from "axios";
 import { useRouter } from "next/navigation";
 import styles from "./LoginForm.module.scss";
 import "@/components/Loader/Loader.scss";
-import { useDispatch } from "react-redux";
-import { setToken } from "@/../store/authSlice";
 import rest from "../../../services/rest";
 
 interface LoginFormProps {}
@@ -14,8 +11,8 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [textError, setTextError] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const router = useRouter();
-  const dispatch = useDispatch();
 
   async function handleLogin(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
@@ -35,13 +32,24 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
         },
       });
       localStorage.setItem("token", response.data["access_token"]);
-      dispatch(setToken(response.data["access_token"]));
       router.push("/admin/clients");
     } catch (error) {
       setTextError("Incorrect login details");
       console.error("Error fetching data: ", error);
     } finally {
       setLoading(false);
+    }
+  }
+
+  function togglePasswordVisibility() {
+    const passwordInput = document.getElementById("password");
+    if (!(passwordInput instanceof HTMLInputElement)) {
+      return;
+    }
+    if (passwordInput.type === "password") {
+      setIsPasswordVisible(!isPasswordVisible);
+    } else {
+      setIsPasswordVisible(!isPasswordVisible);
     }
   }
 
@@ -61,18 +69,30 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
             setEmail(e.target.value);
           }}
         />
-        <input
-          className="formInput"
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Password"
-          required
-          onChange={(e) => {
-            setTextError("");
-            setPassword(e.target.value);
-          }}
-        />
+        <div className={styles.passWrapper}>
+          <input
+            className="formInput"
+            type={isPasswordVisible ? "text" : "password"}
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+            onChange={(e) => {
+              setTextError("");
+              setPassword(e.target.value);
+            }}
+          />
+          <span
+            className={styles.eye}
+            onClick={() => togglePasswordVisibility()}
+          >
+            {isPasswordVisible ? (
+              <img src="/EyeOpened.svg" />
+            ) : (
+              <img src="/EyeClosed.svg" />
+            )}
+          </span>
+        </div>
         <div className={styles.textError}>{textError}</div>
         <button type="submit" onClick={(event) => handleLogin(event)}>
           {isLoading ? <span className="loader"></span> : "Login"}

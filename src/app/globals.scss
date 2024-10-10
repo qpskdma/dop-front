@@ -49,8 +49,45 @@ button {
 
 button:hover {
   cursor: pointer;
-  // transform: scale(1.05);
   background-color: var(--secondary-btn-color);
+}
+
+.addBtn {
+  width: 130px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  column-gap: 5px;
+  span {
+    font-size: 32px;
+    font-weight: 100;
+    width: 36px;
+    height: 100%;
+    color: #fff;
+    background-color: var(--main-color);
+    border-radius: 0 6px 6px 0;
+    margin-left: 10px;
+  }
+}
+
+.deleteBtn {
+  background-color: var(--background-btn-second);
+}
+.deleteBtn:hover {
+  background-color: rgb(153, 27, 27);
+}
+
+.tableBtnContainer {
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  button {
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    width: auto;
+    min-width: 50px;
+  }
 }
 
 .formInput {

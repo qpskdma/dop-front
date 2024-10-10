@@ -1,6 +1,6 @@
 .closeBtn {
   position: absolute;
-  top: 0;
+  top: 0.2;
   right: 0;
 }
 
@@ -47,6 +47,9 @@
   flex-wrap: wrap;
   align-items: center;
   row-gap: 10px;
+  li {
+    list-style-type: none;
+  }
 }
 
 .element {

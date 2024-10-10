@@ -1,0 +1,26 @@
+.page {
+  width: 100%;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 60px);
+  grid-template-columns: 1fr;
+  margin: 30px 200px;
+  > *:nth-child(odd) {
+    background-color: var(--background-dark);
+  }
+  > div {
+    display: grid;
+    grid-auto-flow: column;
+    padding: 10px;
+  }
+}
+
+.navTextContainer {
+  font-weight: 800;
+  div {
+    text-align: center;
+    align-self: center;
+  }
+}
