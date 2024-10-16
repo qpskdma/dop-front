@@ -1,7 +1,15 @@
 import Modal from "@/components/Modal/Modal";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import rest from "../../../../../services/rest";
 import styles from "./AddServerModal.module.scss";
+
+interface FormData {
+  serverName: string;
+  ip: string;
+  port: string;
+  password: string;
+  region: string;
+}
 
 interface AddServerModalProps {
   closeAddServerModal: any;
@@ -18,10 +26,20 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
 }) => {
   const [isLoading, setLoading] = useState(false);
   const [usernameError, setUsernameError] = useState("");
+  const [formData, setFormData] = useState<FormData>({
+    serverName: "",
+    ip: "",
+    port: "",
+    password: "",
+    region: "",
+  });
 
-  const handleInputChange = (event: any) => {
-    setAddValue(event.target.value);
-    setUsernameError("");
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   async function createServer() {
@@ -39,11 +57,11 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
           {},
           {
             params: {
-              name: addValue,
-              ip: "",
-              port: "",
-              password: "",
-              region: "",
+              name: formData.serverName,
+              ip: formData.ip,
+              port: formData.port,
+              password: formData.password,
+              region: formData.region,
             },
           }
         );
@@ -62,38 +80,43 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
         <span className={styles.form}>
           <input
             type="text"
+            name="serverName"
             className="formInput"
             placeholder="Server Name"
-            value={addValue}
-            onInput={(e) => handleInputChange(e)}
+            value={formData.serverName}
+            onInput={handleInputChange}
           />
           <input
             type="text"
+            name="ip"
             className="formInput"
             placeholder="IP"
-            value={addValue}
-            onInput={(e) => handleInputChange(e)}
+            value={formData.ip}
+            onInput={handleInputChange}
           />
           <input
             type="text"
+            name="port"
             className="formInput"
             placeholder="Port"
-            value={addValue}
-            onInput={(e) => handleInputChange(e)}
+            value={formData.port}
+            onInput={handleInputChange}
           />
           <input
             type="password"
+            name="password"
             className="formInput"
             placeholder="Password"
-            value={addValue}
-            onInput={(e) => handleInputChange(e)}
+            value={formData.password}
+            onInput={handleInputChange}
           />
           <input
             type="text"
+            name="region"
             className="formInput"
             placeholder="Region"
-            value={addValue}
-            onInput={(e) => handleInputChange(e)}
+            value={formData.region}
+            onInput={handleInputChange}
           />
           <span className="validation-error">{usernameError}</span>
           <button onClick={() => createServer()}>

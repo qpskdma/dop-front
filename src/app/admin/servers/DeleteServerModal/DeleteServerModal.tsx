@@ -1,29 +1,44 @@
 import React, { useState } from "react";
-import styles from "./DeleteServerModal.module.scss";
 import Modal from "@/components/Modal/Modal";
+import styles from "@/components/Modal/DeletionModal.module.scss";
 import { Server } from "../../../../../services/types";
+import rest from "../../../../../services/rest";
 
 interface DeleteServerModalProps {
-  server: Server;
+  server: Server | undefined;
   closeDeleteServerModal: Function;
-  deleteServer: Function;
 }
 
 const DeleteServerModal: React.FC<DeleteServerModalProps> = ({
   server,
   closeDeleteServerModal,
-  deleteServer,
 }) => {
   const [isLoading, setLoading] = useState(false);
+
+  async function deleteServer() {
+    setLoading(true);
+    try {
+      await rest.delete("/api/vpn/wg_easy/admin/delete_server", {
+        params: {
+          id: server?.id,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    } finally {
+      setLoading(false);
+    }
+    closeDeleteServerModal(true);
+  }
 
   return (
     <div>
       <Modal closeModal={closeDeleteServerModal}>
-        <div className={styles.text}>
+        <div className={styles.delModalText}>
           Are you sure you want to delete
-          <span className={styles.serverName}>{server?.name}</span>?
+          <span className={styles.delItemName}> {server?.name}</span>?
         </div>
-        <div className={styles.btns}>
+        <div className={styles.delBtns}>
           <button className="deleteBtn" onClick={() => deleteServer()}>
             {isLoading ? <span className="loader"></span> : "Yes"}
           </button>

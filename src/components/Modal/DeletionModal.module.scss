@@ -1,17 +1,18 @@
-.text {
-  align-self: center;
+.delModalText {
+  text-align: center;
 }
 
-.clientName {
+.delItemName {
   font-weight: 700;
   color: var(--main-color);
 }
 
-.btns {
+.delBtns {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 20px;
+  column-gap: 15px;
   button {
     width: 150px;
   }

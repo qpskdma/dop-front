@@ -16,6 +16,7 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
   const [searchValue, setSearchValue] = useState("");
   const [isAddModalActive, setIsAddModalActive] = useState(false);
   const [addValue, setAddValue] = useState("");
+  const [serverToDelete, setServerToDelete] = useState<Server>();
   const [isDeleteModalActive, setIsDeleteModalActive] = useState(false);
 
   async function getServers(): Promise<void> {
@@ -30,15 +31,25 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
     getServers();
   }, []);
 
+  const filteredData = servers.filter((element: Server) =>
+    element.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   const closeAddServerModal = (elementAdded: boolean) => {
     setIsAddModalActive(false);
     setAddValue("");
     elementAdded && getServers();
   };
+
+  const openDeletionModal = (server: Server) => {
+    setIsDeleteModalActive(true);
+    setServerToDelete(server);
+  };
+
   const closeDeleteServerModal = (elementAdded: boolean) => {
-    // setIsAddModalActive(false);
-    // setAddValue("");
-    // elementAdded && getServers();
+    setIsDeleteModalActive(false);
+    setAddValue("");
+    elementAdded && getServers();
   };
 
   const isServerNameTaken = () => {
@@ -58,7 +69,7 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
 
   return (
     <>
-      {/* {isAddModalActive ? (
+      {isAddModalActive ? (
         <AddServerModal
           closeAddServerModal={closeAddServerModal}
           isServerNameTaken={isServerNameTaken}
@@ -67,8 +78,11 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
         />
       ) : null}
       {isDeleteModalActive ? (
-        <DeleteServerModal server={servers} closeDeleteServerModal={closeDeleteServerModal} />
-      ) : null} */}
+        <DeleteServerModal
+          server={serverToDelete}
+          closeDeleteServerModal={closeDeleteServerModal}
+        />
+      ) : null}
       <div className={styles.searchContainer}>
         <div></div>
         <Search setSearchValue={setSearchValue} searchValue={searchValue} />
@@ -80,7 +94,7 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
         </button>
       </div>
       <Table fields={fields} navColumns={6}>
-        {servers.map((element: Server, index: number) => {
+        {filteredData.map((element: Server, index: number) => {
           return (
             <div className={styles.serverWrapper} key={index}>
               <div>{element.id}</div>
@@ -94,7 +108,7 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
                   data-tooltip-content="Delete"
                   data-tooltip-place="bottom"
                   className="deleteBtn"
-                  onClick={() => setIsDeleteModalActive(true)}
+                  onClick={() => openDeletionModal(element)}
                 >
                   <img
                     width={"32px"}

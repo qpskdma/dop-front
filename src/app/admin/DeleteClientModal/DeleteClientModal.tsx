@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./DeleteClientModal.module.scss";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { store } from "@/../store/store";
+import styles from "@/components/Modal/DeletionModal.module.scss";
 import rest from "../../../../services/rest";
 import { Config } from "../../../../services/types";
 import Modal from "@/components/Modal/Modal";
@@ -39,11 +36,11 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
 
   return (
     <Modal closeModal={closeDeletionModal}>
-      <div className={styles.text}>
+      <div className={styles.delModalText}>
         Are you sure you want to delete
-        <span className={styles.clientName}> {config?.name}</span>?
+        <span className={styles.delItemName}> {config?.name}</span>?
       </div>
-      <div className={styles.btns}>
+      <div className={styles.delBtns}>
         <button className="deleteBtn" onClick={() => deleteClient()}>
           {isLoading ? <span className="loader"></span> : "Yes"}
         </button>

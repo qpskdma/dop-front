@@ -24,3 +24,15 @@
     align-self: center;
   }
 }
+
+@media (max-width: 1300px) {
+  .container {
+    margin: 30px 50px;
+  }
+}
+
+@media (max-width: 800px) {
+  .container {
+    margin: 30px 0px;
+  }
+}
