@@ -32,7 +32,7 @@ const DeleteServerModal: React.FC<DeleteServerModalProps> = ({
   }
 
   return (
-    <div>
+    <>
       <Modal closeModal={closeDeleteServerModal}>
         <div className={styles.delModalText}>
           Are you sure you want to delete
@@ -45,7 +45,7 @@ const DeleteServerModal: React.FC<DeleteServerModalProps> = ({
           <button onClick={() => closeDeleteServerModal()}>No</button>
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
 

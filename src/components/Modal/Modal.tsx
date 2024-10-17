@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styles from "./Modal.module.scss";
 
 interface ModalProps {
-  children: ReactNode;
+  children: ReactNode | never;
   closeModal: Function;
 }
 

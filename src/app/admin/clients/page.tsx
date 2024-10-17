@@ -1,15 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import AdminPage from "../AdminPage/AdminPage";
-import LogoutBtn from "@/components/LogoutBtn/LogoutBtn";
 
 interface pageProps {}
 
-const page: React.FC<pageProps> = ({}) => {
+const page: React.FC<pageProps> = () => {
   return (
     <>
-      {/* <LogoutBtn /> */}
       <AdminPage />
     </>
   );

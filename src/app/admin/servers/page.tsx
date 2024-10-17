@@ -5,7 +5,7 @@ import ServersPage from "./ServersPage";
 
 interface pageProps {}
 
-const page: React.FC<pageProps> = ({}) => {
+const page: React.FC<pageProps> = () => {
   return <ServersPage />;
 };
 

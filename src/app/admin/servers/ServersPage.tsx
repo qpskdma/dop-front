@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Search from "@/components/Search/Search";
-import Loader from "@/components/Loader/Loader";
 import rest from "../../../../services/rest";
 import { Server } from "../../../../services/types";
 import { Tooltip } from "react-tooltip";

@@ -2,7 +2,7 @@ import styles from "./Table.module.scss";
 import React, { ReactNode } from "react";
 
 interface TableProps {
-  children: ReactNode;
+  children: ReactNode | never;
   fields: Array<string>;
   navColumns: number;
 }

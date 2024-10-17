@@ -1,14 +1,15 @@
 "use client";
+
 import Sidebar from "@/components/Sidebar/Sidebar";
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 import styles from "./layout.module.scss";
 import LogoutBtn from "@/components/LogoutBtn/LogoutBtn";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+interface layoutProps {
+  children: ReactNode | never;
+}
+
+const InnerLayout: React.FC<layoutProps> = ({ children }) => {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
 
   const handleMouseEnter = () => {
@@ -33,4 +34,6 @@ export default function RootLayout({
       {children}
     </>
   );
-}
+};
+
+export default InnerLayout;
