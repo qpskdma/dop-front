@@ -22,7 +22,6 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
     try {
       const response = await rest.get("/api/vpn/wg_easy/admin/get_all_servers");
       setServers(response.data);
-      console.log(response.data);
     } finally {
     }
   }
@@ -36,7 +35,7 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
 
   const closeAddServerModal = (elementAdded: boolean) => {
     setIsAddModalActive(false);
-    setAddValue("");
+    // setAddValue("");
     elementAdded && getServers();
   };
 
@@ -51,11 +50,11 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
     elementAdded && getServers();
   };
 
-  const isServerNameTaken = () => {
-    return (
-      servers.filter((element: Server) => element.name == addValue).length > 0
-    );
-  };
+  // const isServerNameTaken = () => {
+  //   return (
+  //     servers.filter((element: Server) => element.name == addValue).length > 0
+  //   );
+  // };
 
   const fields: Array<string> = [
     "Id",
@@ -70,10 +69,8 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
     <>
       {isAddModalActive ? (
         <AddServerModal
+          servers={servers}
           closeAddServerModal={closeAddServerModal}
-          isServerNameTaken={isServerNameTaken}
-          setAddValue={setAddValue}
-          addValue={addValue}
         />
       ) : null}
       {isDeleteModalActive ? (

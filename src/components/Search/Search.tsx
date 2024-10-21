@@ -9,7 +9,6 @@ interface SearchProps {
 const Search: React.FC<SearchProps> = ({ setSearchValue, searchValue }) => {
   const handleInputChange = (event: any) => {
     setSearchValue(event.target.value);
-    console.log(searchValue);
   };
 
   return (

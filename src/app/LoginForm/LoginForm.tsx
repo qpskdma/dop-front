@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./LoginForm.module.scss";
 import "@/components/Loader/Loader.scss";
 import rest from "../../../services/rest";
+import PasswordInput from "@/components/PasswordInput/PasswordInput";
 
 interface LoginFormProps {}
 
@@ -53,6 +54,11 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
     }
   }
 
+  function handlePasswordChange(e: ChangeEvent<HTMLInputElement>) {
+    setTextError("");
+    setPassword(e.target.value);
+  }
+
   return (
     <div className={styles.page}>
       <form method="post" className={styles.loginForm}>
@@ -69,7 +75,12 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
             setEmail(e.target.value);
           }}
         />
-        <div className={styles.passWrapper}>
+        <PasswordInput
+          isPasswordVisible={isPasswordVisible}
+          handlePasswordChange={handlePasswordChange}
+          togglePasswordVisibility={togglePasswordVisibility}
+        />
+        {/* <div className={styles.passWrapper}>
           <input
             className="formInput"
             type={isPasswordVisible ? "text" : "password"}
@@ -92,7 +103,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
               <img src="/EyeClosed.svg" />
             )}
           </span>
-        </div>
+        </div> */}
         <div className={styles.textError}>{textError}</div>
         <button type="submit" onClick={(event) => handleLogin(event)}>
           {isLoading ? <span className="loader"></span> : "Login"}

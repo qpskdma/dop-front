@@ -2,6 +2,8 @@ import Modal from "@/components/Modal/Modal";
 import React, { ChangeEvent, useState } from "react";
 import rest from "../../../../../services/rest";
 import styles from "./AddServerModal.module.scss";
+import { Server } from "http";
+import PasswordInput from "@/components/PasswordInput/PasswordInput";
 
 interface FormData {
   serverName: string;
@@ -12,20 +14,18 @@ interface FormData {
 }
 
 interface AddServerModalProps {
+  servers: Server[] | any;
   closeAddServerModal: any;
-  isServerNameTaken: Function;
-  setAddValue: Function;
-  addValue: string;
 }
 
 const AddServerModal: React.FC<AddServerModalProps> = ({
+  servers,
   closeAddServerModal,
-  isServerNameTaken,
-  setAddValue,
-  addValue,
 }) => {
   const [isLoading, setLoading] = useState(false);
-  const [usernameError, setUsernameError] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [usernameError, setError] = useState("");
+  const [portError, setPortError] = React.useState("");
   const [formData, setFormData] = useState<FormData>({
     serverName: "",
     ip: "",
@@ -40,15 +40,29 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
       ...prevState,
       [name]: value,
     }));
+    if (name === "port") {
+      if (value.length > 5 || !/^\d+$/.test(value)) {
+        setPortError("Must be 5 digits or less");
+      } else {
+        setPortError("");
+      }
+    }
   };
 
   async function createServer() {
-    if (!addValue) {
-      setUsernameError("Server Name cannot be empty");
+    if (
+      !formData.ip ||
+      !formData.serverName ||
+      !formData.password ||
+      !formData.region ||
+      !formData.port
+    ) {
+      setError("Fill in all fields");
       return;
     }
     if (isServerNameTaken()) {
-      setUsernameError("Server Name taken");
+      setError("Server Name taken");
+      return;
     } else {
       setLoading(true);
       try {
@@ -70,10 +84,36 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
         console.error("Error fetching data: ", error);
       } finally {
         setLoading(false);
-        setAddValue("");
+        setFormData({
+          serverName: "",
+          ip: "",
+          port: "",
+          password: "",
+          region: "",
+        });
       }
     }
   }
+
+  const isServerNameTaken = () => {
+    return (
+      servers.filter((element: any) => element.name === formData.serverName)
+        .length > 0
+    );
+  };
+
+  function togglePasswordVisibility() {
+    const passwordInput = document.getElementById("password");
+    if (!(passwordInput instanceof HTMLInputElement)) {
+      return;
+    }
+    if (passwordInput.type === "password") {
+      setIsPasswordVisible(!isPasswordVisible);
+    } else {
+      setIsPasswordVisible(!isPasswordVisible);
+    }
+  }
+
   return (
     <>
       <Modal closeModal={closeAddServerModal}>
@@ -102,14 +142,25 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
             value={formData.port}
             onInput={handleInputChange}
           />
-          <input
+          {portError ? (
+            <span className={`validation-error ${styles.error}`}>
+              {portError}
+            </span>
+          ) : null}
+          <PasswordInput
+            value={formData.password}
+            isPasswordVisible={isPasswordVisible}
+            handlePasswordChange={handleInputChange}
+            togglePasswordVisibility={togglePasswordVisibility}
+          />
+          {/* <input
             type="password"
             name="password"
             className="formInput"
             placeholder="Password"
             value={formData.password}
             onInput={handleInputChange}
-          />
+          /> */}
           <input
             type="text"
             name="region"

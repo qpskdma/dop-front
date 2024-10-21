@@ -67,12 +67,14 @@ button:hover {
     background-color: var(--main-color);
     border-radius: 0 6px 6px 0;
     margin-left: 10px;
+    padding-top: 2px;
   }
 }
 
 .deleteBtn {
   background-color: var(--background-btn-second);
 }
+
 .deleteBtn:hover {
   background-color: rgb(153, 27, 27);
 }
@@ -85,8 +87,7 @@ button:hover {
     position: relative;
     display: inline-block;
     height: 40px;
-    width: auto;
-    min-width: 50px;
+    aspect-ratio: 1/1;
   }
 }
 

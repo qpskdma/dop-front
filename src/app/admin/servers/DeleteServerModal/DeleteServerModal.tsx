@@ -20,7 +20,7 @@ const DeleteServerModal: React.FC<DeleteServerModalProps> = ({
     try {
       await rest.delete("/api/vpn/wg_easy/admin/delete_server", {
         params: {
-          id: server?.id,
+          server_id: server?.id,
         },
       });
     } catch (error) {

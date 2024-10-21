@@ -64,13 +64,15 @@
 }
 
 @media (max-width: 1300px) {
-  .container {
+  .container,
+  .searchContainer {
     margin: 30px 50px;
   }
 }
 
 @media (max-width: 800px) {
-  .container {
+  .container,
+  .searchContainer {
     margin: 30px 0px;
   }
 }

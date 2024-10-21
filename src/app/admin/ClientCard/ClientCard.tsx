@@ -26,10 +26,10 @@ const ClientCard: React.FC<ClientCardProps> = ({
       <div className="tableBtnContainer">
         <div>
           <button
+            className={styles.qr}
             data-tooltip-id="qr"
             data-tooltip-content="Download QR code"
             data-tooltip-place="bottom"
-            className={styles.qr}
             onClick={() => getQR(config)}
           >
             <img width={"32px"} height={"32px"} src="/QR.svg" alt="" />

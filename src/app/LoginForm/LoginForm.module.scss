@@ -31,26 +31,3 @@
 .loginForm > button {
   height: 50px;
 }
-
-.passWrapper {
-  position: relative;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  input {
-    width: 100%;
-  }
-  .eye {
-    position: absolute;
-    right: 15px;
-    top: 14px;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-.openedEye:hover::after,
-.closedEye:hover::after {
-  cursor: pointer;
-}
