@@ -6,16 +6,12 @@ import rest from "../../../services/rest";
 interface LogoutBtnProps {}
 
 const LogoutBtn: React.FC<LogoutBtnProps> = ({}) => {
-  const logout = async (): Promise<void> => {
-    try {
-      await rest.post("/auth/logout");
-    } finally {
-      localStorage.removeItem("token");
-    }
-  };
+  // const logout = () => {
+  //     localStorage.removeItem("token");
+  // };
 
   return (
-    <Link href="/" onClick={() => logout()}>
+    <Link href="/" onClick={() => localStorage.removeItem("token")}>
       <p className={styles.exitBtn}>
         Logout
         <span>

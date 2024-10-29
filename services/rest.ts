@@ -1,6 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 
-const rest = axios.create({ baseURL: "https://api.dopserver.ru" });
+const rest = axios.create({ baseURL: "https://dopserver.ru/api" });
 
 rest.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;

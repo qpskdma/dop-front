@@ -67,7 +67,7 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
       setLoading(true);
       try {
         await rest.post(
-          "/api/vpn/wg_easy/admin/add_server",
+          "/vpn/admin/add_server",
           {},
           {
             params: {

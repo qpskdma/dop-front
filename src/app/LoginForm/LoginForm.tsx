@@ -9,7 +9,7 @@ interface LoginFormProps {}
 
 const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const [isLoading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [textError, setTextError] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -17,19 +17,21 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
   async function handleLogin(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    if (!email || !password) {
+    if (!username || !password) {
       setTextError("Enter data");
       return;
     }
     setLoading(true);
-    const formData = new FormData();
-    formData.append("username", email);
-    formData.append("password", password);
+    const bodyData = {
+      username: username,
+      password: password,
+    };
     try {
-      const response = await rest.post("/auth/login", formData, {
+      const response = await rest.post("/auth/login", bodyData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+          Accept: "*/*",
+          "Accept-Encoding": "gzip, deflate, br",
         },
       });
       localStorage.setItem("token", response.data["access_token"]);
@@ -65,14 +67,14 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
         <legend>Login</legend>
         <input
           className="formInput"
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Email"
+          type="username"
+          id="username"
+          name="username"
+          placeholder="Login"
           required
           onChange={(e) => {
             setTextError("");
-            setEmail(e.target.value);
+            setUsername(e.target.value);
           }}
         />
         <PasswordInput

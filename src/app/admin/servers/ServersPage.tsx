@@ -20,7 +20,7 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
 
   async function getServers(): Promise<void> {
     try {
-      const response = await rest.get("/api/vpn/wg_easy/admin/get_all_servers");
+      const response = await rest.get("/vpn/wg_easy/admin/get_all_servers");
       setServers(response.data);
     } finally {
     }

@@ -35,14 +35,11 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
   async function fetchData() {
     if (!activeServer) return;
     try {
-      const response = await rest.get(
-        `/api/vpn/wg_easy/admin/get_all_clients`,
-        {
-          params: {
-            region: activeServer,
-          },
-        }
-      );
+      const response = await rest.get(`vpn/admin/get_all_clients`, {
+        params: {
+          region: activeServer,
+        },
+      });
       setClientsResponse(response.data);
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -54,9 +51,12 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
   useEffect((): any => {
     async function getServices(): Promise<void> {
       try {
-        const response = await rest.get(
-          "/api/vpn/wg_easy/admin/get_all_servers"
-        );
+        const response = await rest.get("/vpn/admin/get_all_servers", {
+          headers: {
+            Accept: "*/*",
+            "Accept-Encoding": "gzip, deflate, br",
+          },
+        });
         setServers(response.data);
         response.data ? setActiveServer(response.data[0].region) : undefined;
       } finally {
@@ -109,10 +109,9 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
   const getConfig = async (config: Config) => {
     try {
       await rest
-        .get("/api/vpn/wg_easy/user/get_user_config", {
+        .get("/vpn/user/get_user_config/config", {
           params: {
             id: config.id,
-            type: "config",
             region: activeServer,
           },
         })
@@ -128,10 +127,9 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
   const getQR = async (config: Config) => {
     try {
       await rest
-        .get("/api/vpn/wg_easy/user/get_user_config", {
+        .get("/vpn/user/get_user_config/qrcode", {
           params: {
             id: config.id,
-            type: "qr",
             region: activeServer,
           },
         })

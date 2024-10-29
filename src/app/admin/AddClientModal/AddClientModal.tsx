@@ -37,7 +37,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
       setLoading(true);
       try {
         await rest.post(
-          "/api/vpn/wg_easy/user/add_vpn_client_to_server",
+          "/vpn/wg_easy/user/add_vpn_client_to_server",
           {},
           {
             params: {

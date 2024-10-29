@@ -20,10 +20,10 @@ const DeleteClientModal: React.FC<DeleteClientModalProps> = ({
   async function deleteClient() {
     setLoading(true);
     try {
-      await rest.delete("/api/vpn/wg_easy/admin/del_vpn_client_to_server", {
+      await rest.delete("/vpn/admin/del_vpn_client_to_server", {
         params: {
-          region: activeServer,
           id: config?.id,
+          region: activeServer,
         },
       });
     } catch (error) {
