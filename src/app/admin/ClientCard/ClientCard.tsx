@@ -32,7 +32,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
             data-tooltip-place="bottom"
             onClick={() => getQR(config)}
           >
-            <img width={"32px"} height={"32px"} src="/QR.svg" alt="" />
+            <img width={"32"} height={"32"} src="/QR.svg" alt="QR" />
           </button>
         </div>
         <button
@@ -41,7 +41,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
           data-tooltip-place="bottom"
           onClick={() => getConfig(config)}
         >
-          <img width={"32px"} height={"32px"} src="/Download.svg" alt="" />
+          <img width={"32"} height={"32"} src="/Download.svg" alt="Download" />
         </button>
         <button
           data-tooltip-id="delete"
@@ -50,7 +50,7 @@ const ClientCard: React.FC<ClientCardProps> = ({
           className="deleteBtn"
           onClick={() => openDeletionModal(config)}
         >
-          <img width={"32px"} height={"32px"} src="/Delete.svg" alt="" />
+          <img width={"32"} height={"32"} src="/Delete.svg" alt="Delete" />
         </button>
         <Tooltip id="config" />
         <Tooltip id="qr" />

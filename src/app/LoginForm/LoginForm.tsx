@@ -64,14 +64,15 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   return (
     <div className={styles.page}>
       <form method="post" className={styles.loginForm}>
-        <legend>Login</legend>
+        <h6>Login</h6>
         <input
           className="formInput"
-          type="username"
+          type="text"
           id="username"
           name="username"
           placeholder="Login"
-          required
+          pattern="[a-zA-Z0-9]+"
+          title="Letters and numbers only"
           onChange={(e) => {
             setTextError("");
             setUsername(e.target.value);
@@ -82,30 +83,6 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
           handlePasswordChange={handlePasswordChange}
           togglePasswordVisibility={togglePasswordVisibility}
         />
-        {/* <div className={styles.passWrapper}>
-          <input
-            className="formInput"
-            type={isPasswordVisible ? "text" : "password"}
-            id="password"
-            name="password"
-            placeholder="Password"
-            required
-            onChange={(e) => {
-              setTextError("");
-              setPassword(e.target.value);
-            }}
-          />
-          <span
-            className={styles.eye}
-            onClick={() => togglePasswordVisibility()}
-          >
-            {isPasswordVisible ? (
-              <img src="/EyeOpened.svg" />
-            ) : (
-              <img src="/EyeClosed.svg" />
-            )}
-          </span>
-        </div> */}
         <div className={styles.textError}>{textError}</div>
         <button type="submit" onClick={(event) => handleLogin(event)}>
           {isLoading ? <span className="loader"></span> : "Login"}

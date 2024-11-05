@@ -1,8 +1,8 @@
-const getLastSession = (seconds: number | null): string => {
-  if (!seconds) {
-    // setOnline(true);
+const getLastSession = (milliseconds: number | null): string => {
+  if (!milliseconds) {
     return " never";
   }
+  const seconds = milliseconds * 1000;
   if (seconds > 60) {
     const minutes = seconds / 60;
     if (minutes > 60) {

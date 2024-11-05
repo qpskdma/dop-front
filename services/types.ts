@@ -13,16 +13,6 @@ export interface Config {
   transferTx: number;
 }
 
-export interface Data {
-  configs: Config[];
-}
-
-export interface GetClientsResponse {
-  status: string;
-  message: string;
-  data: Data;
-}
-
 export enum Region {
   GER = "ger",
   SWE = "swe",
@@ -34,4 +24,12 @@ export interface Server {
   ip: string;
   port: number;
   region: Region;
+}
+
+export interface TokenInfo {
+  id: number;
+  user: string;
+  email: string;
+  admin: boolean;
+  exp: number;
 }

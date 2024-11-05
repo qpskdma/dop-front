@@ -5,8 +5,8 @@ import Modal from "@/components/Modal/Modal";
 
 interface AddClientModalProps {
   activeServer: string;
-  closeAddClientModal: any;
-  isUsernameTaken: any;
+  closeAddClientModal: Function;
+  isUsernameTaken: Function;
   setAddValue: Function;
   addValue: string;
 }
@@ -21,7 +21,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
   const [isLoading, setLoading] = useState(false);
   const [usernameError, setUsernameError] = useState("");
 
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddValue(event.target.value);
     setUsernameError("");
   };
@@ -37,7 +37,7 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
       setLoading(true);
       try {
         await rest.post(
-          "/vpn/wg_easy/user/add_vpn_client_to_server",
+          "/vpn/user/add_vpn_client_to_server",
           {},
           {
             params: {
@@ -64,7 +64,9 @@ const AddClientModal: React.FC<AddClientModalProps> = ({
           className="formInput"
           placeholder="Username"
           value={addValue}
-          onInput={(e) => handleInputChange(e)}
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(e)
+          }
         />
         <span className="validation-error">{usernameError}</span>
         <button onClick={() => createClient()}>

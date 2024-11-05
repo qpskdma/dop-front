@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import styles from "./Sidebar.module.scss";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import * as jwt from "jsonwebtoken";
+import { TokenInfo } from "../../../services/types";
 
 interface SideMenuProps {
   isSidebarActive: boolean;
@@ -22,6 +24,9 @@ const Sidebar: React.FC<SideMenuProps> = ({
     return setTimeout(() => setIsSidebarActive(false), 400);
   };
 
+  const token = localStorage.getItem("token") || "";
+  const decoded = jwt.decode(token) as TokenInfo;
+
   return (
     <>
       <nav
@@ -30,18 +35,9 @@ const Sidebar: React.FC<SideMenuProps> = ({
         ref={containerRef}
         onMouseLeave={handleMouseLeave}
       >
-        {/* <img
-          className={styles.closeBtn}
-          src="/CloseBtn.svg"
-          alt=""
-          onClick={() => {
-            setCloseAnim(true);
-            return setTimeout(() => setIsSidebarActive(false), 400);
-          }}
-        /> */}
         <div className={styles.user}>
-          <img src="/User.svg" alt="" />
-          <div>User228</div>
+          <img src="/User.svg" alt="User" />
+          <div>{decoded ? decoded.user : null}</div>
         </div>
         <ul className={styles.listWrapper}>
           <li>
@@ -51,7 +47,7 @@ const Sidebar: React.FC<SideMenuProps> = ({
                 pathname == "/admin/clients" ? styles.active : ""
               }`}
             >
-              <img src="/Users.svg" alt="" />
+              <img src="/Users.svg" alt="Users" />
               Clients
             </Link>
           </li>
@@ -62,7 +58,7 @@ const Sidebar: React.FC<SideMenuProps> = ({
                 pathname == "/admin/servers" ? styles.active : ""
               }`}
             >
-              <img src="/Server.svg" alt="" />
+              <img src="/Server.svg" alt="Server" />
               Servers
             </Link>
           </li>

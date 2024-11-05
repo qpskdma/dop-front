@@ -14,7 +14,11 @@ const Modal: React.FC<ModalProps> = ({ children, closeModal }) => {
         onClick={(event) => event.stopPropagation()}
       >
         <div className={styles.closeBtn}>
-          <img src="/CloseBtn.svg" alt="" onClick={() => closeModal(false)} />
+          <img
+            src="/CloseBtn.svg"
+            alt="Close"
+            onClick={() => closeModal(false)}
+          />
         </div>
         <div className={styles.content}>{children}</div>
       </div>

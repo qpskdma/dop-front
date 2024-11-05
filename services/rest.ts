@@ -12,7 +12,7 @@ rest.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error instanceof AxiosError && error.response?.status === 401) {
+    if (error instanceof AxiosError && error.request?.status === 0) {
       window.location.href = "/";
     }
     return Promise.reject(error);

@@ -1,5 +1,5 @@
 const getCreationTime = (creationTime: number): string => {
-  const date = new Date(creationTime);
+  const date = new Date(creationTime * 1000);
   const options = {
     year: "numeric",
     month: "2-digit",

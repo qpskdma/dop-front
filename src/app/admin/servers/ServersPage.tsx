@@ -20,12 +20,17 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
 
   async function getServers(): Promise<void> {
     try {
-      const response = await rest.get("/vpn/wg_easy/admin/get_all_servers");
+      const response = await rest.get("/vpn/admin/get_all_servers", {
+        headers: {
+          Accept: "*/*",
+          "Accept-Encoding": "gzip, deflate, br",
+        },
+      });
       setServers(response.data);
     } finally {
     }
   }
-  useEffect((): any => {
+  useEffect((): void => {
     getServers();
   }, []);
 
@@ -107,10 +112,10 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
                   onClick={() => openDeletionModal(element)}
                 >
                   <img
-                    width={"32px"}
-                    height={"32px"}
+                    width={"32"}
+                    height={"32"}
                     src="/Delete.svg"
-                    alt=""
+                    alt="Delete"
                   />
                 </button>
                 <Tooltip id="delete" />

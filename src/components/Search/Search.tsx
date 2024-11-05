@@ -2,12 +2,12 @@ import React from "react";
 import styles from "./Search.module.scss";
 
 interface SearchProps {
-  setSearchValue: any;
+  setSearchValue: Function;
   searchValue: string;
 }
 
 const Search: React.FC<SearchProps> = ({ setSearchValue, searchValue }) => {
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
@@ -31,7 +31,9 @@ const Search: React.FC<SearchProps> = ({ setSearchValue, searchValue }) => {
           placeholder="Search"
           className={styles.search}
           value={searchValue}
-          onInput={(e) => handleInputChange(e)}
+          onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(e)
+          }
         />
       </div>
     </div>

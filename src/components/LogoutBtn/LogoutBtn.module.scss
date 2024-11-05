@@ -1,8 +1,11 @@
+.wrapper {
+  position: relative;
+}
+
 .exitBtn {
-  // background-color: var(--background-btn-second);
   width: 110px;
   position: absolute;
-  top: 19px;
+  top: -53px;
   right: 15px;
   display: flex;
   justify-content: right;
@@ -11,12 +14,9 @@
   span {
     width: 36px;
     height: 100%;
-    // background-color: var(--main-color);
-    // border-radius: 0 6px 6px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    // margin-left: 10px;
   }
   color: var(--text-white-color);
   opacity: 0.5;

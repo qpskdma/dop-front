@@ -30,9 +30,9 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
       />
       <span className={styles.eye} onClick={() => togglePasswordVisibility()}>
         {isPasswordVisible ? (
-          <img src="/EyeOpened.svg" />
+          <img src="/EyeOpened.svg" alt="Eye opened" />
         ) : (
-          <img src="/EyeClosed.svg" />
+          <img src="/EyeClosed.svg" alt="Eye closed" />
         )}
       </span>
     </div>

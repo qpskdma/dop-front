@@ -2,10 +2,10 @@ import Modal from "@/components/Modal/Modal";
 import React, { ChangeEvent, useState } from "react";
 import rest from "../../../../../services/rest";
 import styles from "./AddServerModal.module.scss";
-import { Server } from "http";
+import { Server } from "../../../../../services/types";
 import PasswordInput from "@/components/PasswordInput/PasswordInput";
 
-interface FormData {
+interface NewServer {
   serverName: string;
   ip: string;
   port: string;
@@ -14,8 +14,8 @@ interface FormData {
 }
 
 interface AddServerModalProps {
-  servers: Server[] | any;
-  closeAddServerModal: any;
+  servers: Server[];
+  closeAddServerModal: Function;
 }
 
 const AddServerModal: React.FC<AddServerModalProps> = ({
@@ -26,7 +26,8 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [usernameError, setError] = useState("");
   const [portError, setPortError] = React.useState("");
-  const [formData, setFormData] = useState<FormData>({
+  const [IPError, setIPError] = React.useState("");
+  const [newServer, setNewServer] = useState<NewServer>({
     serverName: "",
     ip: "",
     port: "",
@@ -36,10 +37,6 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
     if (name === "port") {
       if (value.length > 5 || !/^\d+$/.test(value)) {
         setPortError("Must be 5 digits or less");
@@ -47,15 +44,38 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
         setPortError("");
       }
     }
+    if (name === "ip") {
+      const formattedValue = value.replace(/(\d{3})(?=\d)/g, "$1.");
+      setNewServer((prevState) => ({
+        ...prevState,
+        [name]: formattedValue,
+      }));
+      if (validateIP(value) || !value) {
+        setIPError("");
+      } else {
+        setIPError("Invalid IP address");
+      }
+      return;
+    }
+    setNewServer((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
+
+  function validateIP(ip: string) {
+    const ipRegex =
+      /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    return ipRegex.test(ip);
+  }
 
   async function createServer() {
     if (
-      !formData.ip ||
-      !formData.serverName ||
-      !formData.password ||
-      !formData.region ||
-      !formData.port
+      !newServer.ip ||
+      !newServer.serverName ||
+      !newServer.password ||
+      !newServer.region ||
+      !newServer.port
     ) {
       setError("Fill in all fields");
       return;
@@ -68,23 +88,22 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
       try {
         await rest.post(
           "/vpn/admin/add_server",
-          {},
           {
-            params: {
-              name: formData.serverName,
-              ip: formData.ip,
-              port: formData.port,
-              password: formData.password,
-              region: formData.region,
-            },
-          }
+            name: newServer.serverName,
+            ip: newServer.ip,
+            port: newServer.port,
+            password: newServer.password,
+            region: newServer.region,
+          },
+          {}
         );
         closeAddServerModal(true);
       } catch (error) {
         console.error("Error fetching data: ", error);
+        setError("Incorrect password");
       } finally {
         setLoading(false);
-        setFormData({
+        setNewServer({
           serverName: "",
           ip: "",
           port: "",
@@ -97,7 +116,7 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
 
   const isServerNameTaken = () => {
     return (
-      servers.filter((element: any) => element.name === formData.serverName)
+      servers.filter((element: Server) => element.name === newServer.serverName)
         .length > 0
     );
   };
@@ -117,13 +136,13 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
   return (
     <>
       <Modal closeModal={closeAddServerModal}>
-        <span className={styles.form}>
+        <form className={styles.form}>
           <input
             type="text"
             name="serverName"
             className="formInput"
             placeholder="Server Name"
-            value={formData.serverName}
+            value={newServer.serverName}
             onInput={handleInputChange}
           />
           <input
@@ -131,15 +150,20 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
             name="ip"
             className="formInput"
             placeholder="IP"
-            value={formData.ip}
+            value={newServer.ip}
             onInput={handleInputChange}
           />
+          {IPError ? (
+            <span className={`validation-error ${styles.error}`}>
+              {IPError}
+            </span>
+          ) : null}
           <input
             type="text"
             name="port"
             className="formInput"
             placeholder="Port"
-            value={formData.port}
+            value={newServer.port}
             onInput={handleInputChange}
           />
           {portError ? (
@@ -148,7 +172,7 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
             </span>
           ) : null}
           <PasswordInput
-            value={formData.password}
+            value={newServer.password}
             isPasswordVisible={isPasswordVisible}
             handlePasswordChange={handleInputChange}
             togglePasswordVisibility={togglePasswordVisibility}
@@ -158,7 +182,7 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
             name="password"
             className="formInput"
             placeholder="Password"
-            value={formData.password}
+            value={newServer.password}
             onInput={handleInputChange}
           /> */}
           <input
@@ -166,14 +190,14 @@ const AddServerModal: React.FC<AddServerModalProps> = ({
             name="region"
             className="formInput"
             placeholder="Region"
-            value={formData.region}
+            value={newServer.region}
             onInput={handleInputChange}
           />
           <span className="validation-error">{usernameError}</span>
           <button onClick={() => createServer()}>
             {isLoading ? <span className="loader"></span> : "Add Server"}
           </button>
-        </span>
+        </form>
       </Modal>
     </>
   );

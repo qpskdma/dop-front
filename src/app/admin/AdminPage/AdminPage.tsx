@@ -9,16 +9,14 @@ import DeleteClientModal from "../DeleteClientModal/DeleteClientModal";
 import rest from "../../../../services/rest";
 import DropdownServers from "@/components/DropdownServers/DropdownServers";
 import { Server } from "http";
-import { Config, GetClientsResponse } from "../../../../services/types";
+import { Config } from "../../../../services/types";
 import { Tooltip } from "react-tooltip";
 import Utils from "../../../../services/utils";
 
 interface AdminPageProps {}
 
 const AdminPage: React.FC<AdminPageProps> = ({}) => {
-  const [clientsResponse, setClientsResponse] = useState<GetClientsResponse>(
-    {} as GetClientsResponse
-  );
+  const [clientsResponse, setClientsResponse] = useState<Array<Config>>([]);
   const [sortField, setSortField] = useState<keyof Config>("createdAt");
   const [sortCreateATDirection, setSortCreateADirection] = useState(true);
   const [sortLastSessionDirection, setSortLastSessionDirection] =
@@ -48,7 +46,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
     }
   }
 
-  useEffect((): any => {
+  useEffect((): void => {
     async function getServices(): Promise<void> {
       try {
         const response = await rest.get("/vpn/admin/get_all_servers", {
@@ -69,7 +67,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
     fetchData();
   }, [activeServer]);
 
-  const filteredData = clientsResponse.data?.configs.filter((element: Config) =>
+  const filteredData = clientsResponse.filter((element: Config) =>
     element.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
@@ -79,17 +77,37 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
 
   const isUsernameTaken = () => {
     return (
-      clientsResponse.data.configs.filter(
-        (element: Config) => element.name == addValue
-      ).length > 0
+      clientsResponse.filter((element: Config) => element.name == addValue)
+        .length > 0
     );
   };
 
-  const closeAddClientModal = (elementAdded: boolean) => {
-    setIsAddModalActive(false);
-    setAddValue("");
-    elementAdded && fetchData();
+  const addClient = async () => {
+    setIsAddModalActive(true);
+    try {
+      await rest.post(
+        "/vpn/user/add_vpn_client_to_server",
+        {},
+        {
+          params: {
+            region: activeServer,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    } finally {
+      setIsAddModalActive(false);
+    }
+    fetchData();
   };
+
+  // const closeAddClientModal = (elementAdded: boolean) => {
+  //   setIsAddModalActive(false);
+  //   setAddValue("");
+  //   elementAdded && fetchData();
+  // }
+  // на случай если модалка снова будет нужна
 
   const closeDeletionModal = (elementRemoved: boolean) => {
     setIsDeletionModalActive(false);
@@ -144,7 +162,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
 
   return (
     <div className={styles.page}>
-      {isAddModalActive && (
+      {/* {isAddModalActive && (
         <AddClientModal
           activeServer={activeServer}
           closeAddClientModal={closeAddClientModal}
@@ -152,7 +170,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
           setAddValue={setAddValue}
           addValue={addValue}
         />
-      )}
+      )} */}
       {isDeletionModalActive ? (
         <DeleteClientModal
           activeServer={activeServer}
@@ -169,9 +187,16 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
         <Search setSearchValue={setSearchValue} searchValue={searchValue} />
         <button
           className="addBtn"
-          onClick={() => setIsAddModalActive(!isAddModalActive)}
+          onClick={() => addClient()}
+          // onClick={() => setIsAddModalActive(!isAddModalActive)} если модалка понадобится
         >
-          Add Client <span>+</span>
+          {isAddModalActive ? (
+            <div className="loader"></div>
+          ) : (
+            <>
+              Add Client <span>+</span>
+            </>
+          )}
         </button>
       </div>
       <div className={styles.container}>
@@ -189,9 +214,9 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
           >
             Create Time
             {sortCreateATDirection ? (
-              <img src="/SortUp.svg"></img>
+              <img src="/SortUp.svg" alt="Sort up"></img>
             ) : (
-              <img src="/SortDown.svg"></img>
+              <img src="/SortDown.svg" alt="Sort down"></img>
             )}
           </div>
           <div
@@ -206,9 +231,9 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
           >
             Last Session
             {sortLastSessionDirection ? (
-              <img src="/SortUp.svg"></img>
+              <img src="/SortUp.svg" alt="Sort up" />
             ) : (
-              <img src="/SortDown.svg"></img>
+              <img src="/SortDown.svg" alt="Sort down" />
             )}
           </div>
           <div>Actions</div>
