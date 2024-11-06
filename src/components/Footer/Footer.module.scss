@@ -1,0 +1,63 @@
+.container {
+  height: 300px;
+  background-color: var(--background-dark);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  padding: 40px 30px;
+  column-gap: 50px;
+  h6 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  & > div {
+    flex-grow: 1;
+  }
+  a {
+    position: relative;
+    display: inline-flex;
+    &::after {
+      content: "";
+      width: 0;
+      height: 1.5px;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      translate: -50%;
+      background-color: currentColor;
+      transition-duration: 0.4s;
+    }
+    &:hover::after {
+      width: 100%;
+    }
+  }
+}
+
+.logo {
+  margin-top: -130px;
+  a::after {
+    height: 0;
+  }
+}
+
+.container ul {
+  list-style-type: none;
+  line-height: 2;
+  li {
+    height: 32px;
+  }
+}
+
+.payment {
+  display: flex;
+  gap: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.contacts img {
+  vertical-align: middle;
+  margin-right: 7px;
+}

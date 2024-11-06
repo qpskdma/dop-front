@@ -3,10 +3,12 @@
 }
 
 .container {
+  min-height: 300px;
   display: grid;
   grid-template-rows: repeat(auto-fill, 60px);
   grid-template-columns: 1fr;
-  margin: 30px 200px;
+  margin: 70px 200px;
+  margin-bottom: 150px;
   > *:nth-child(odd) {
     background-color: var(--background-dark);
   }

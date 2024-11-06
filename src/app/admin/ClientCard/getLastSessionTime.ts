@@ -1,8 +1,9 @@
-const getLastSession = (milliseconds: number | null): string => {
-  if (!milliseconds) {
+const getLastSession = (timestamp: number | null): string => {
+  if (!timestamp) {
     return " never";
   }
-  const seconds = milliseconds * 1000;
+  const now = Math.floor(Date.now() / 1000);
+  const seconds = now - timestamp;
   if (seconds > 60) {
     const minutes = seconds / 60;
     if (minutes > 60) {

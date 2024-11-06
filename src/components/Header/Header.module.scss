@@ -8,8 +8,14 @@
 }
 
 .logo {
+  display: flex;
+  flex-direction: row;
   font-size: 50px;
   span {
     color: var(--main-color);
+  }
+  img {
+    margin-top: -35px;
+    margin-left: -70px;
   }
 }

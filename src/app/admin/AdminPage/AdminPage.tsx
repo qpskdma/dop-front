@@ -4,7 +4,6 @@ import ClientCard from "../ClientCard/ClientCard";
 import Search from "@/components/Search/Search";
 import styles from "../AdminPage/AdminPage.module.scss";
 import Loader from "@/components/Loader/Loader";
-import AddClientModal from "../AddClientModal/AddClientModal";
 import DeleteClientModal from "../DeleteClientModal/DeleteClientModal";
 import rest from "../../../../services/rest";
 import DropdownServers from "@/components/DropdownServers/DropdownServers";

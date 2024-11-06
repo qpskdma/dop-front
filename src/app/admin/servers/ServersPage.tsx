@@ -7,10 +7,12 @@ import Table from "@/components/Table/Table";
 import styles from "./ServersPage.module.scss";
 import AddServerModal from "./AddServerModal/AddServerModal";
 import DeleteServerModal from "./DeleteServerModal/DeleteServerModal";
+import Loader from "@/components/Loader/Loader";
 
 interface ServersPage {}
 
 const ServersPage: React.FC<ServersPage> = ({}) => {
+  const [isLoading, setLoading] = useState(true);
   const [servers, setServers] = useState([] as Server[]);
   const [searchValue, setSearchValue] = useState("");
   const [isAddModalActive, setIsAddModalActive] = useState(false);
@@ -28,6 +30,7 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
       });
       setServers(response.data);
     } finally {
+      setLoading(false);
     }
   }
   useEffect((): void => {
@@ -40,7 +43,6 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
 
   const closeAddServerModal = (elementAdded: boolean) => {
     setIsAddModalActive(false);
-    // setAddValue("");
     elementAdded && getServers();
   };
 
@@ -95,6 +97,11 @@ const ServersPage: React.FC<ServersPage> = ({}) => {
         </button>
       </div>
       <Table fields={fields} navColumns={6}>
+        {isLoading ? (
+          <span className={styles.loader}>
+            <Loader />
+          </span>
+        ) : null}
         {filteredData.map((element: Server, index: number) => {
           return (
             <div className={styles.serverWrapper} key={index}>

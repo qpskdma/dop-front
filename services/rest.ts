@@ -15,6 +15,9 @@ rest.interceptors.response.use(
     if (error instanceof AxiosError && error.request?.status === 0) {
       window.location.href = "/";
     }
+    if (error instanceof AxiosError && error.request?.status === 401) {
+      window.location.href = "/";
+    }
     return Promise.reject(error);
   }
 );

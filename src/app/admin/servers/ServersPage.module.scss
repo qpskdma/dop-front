@@ -3,6 +3,7 @@
   grid-auto-flow: column;
   grid-template-columns: repeat(6, 1fr);
   padding: 10px;
+
   div {
     text-align: center;
     align-self: center;
@@ -15,4 +16,8 @@
   grid-template-columns: repeat(3, 1fr);
   margin: 25px 200px 10px 200px;
   justify-items: end;
+}
+
+.loader {
+  margin-top: -70px;
 }
