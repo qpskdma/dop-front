@@ -1,7 +1,13 @@
 "use client";
 
-import LoginForm from "./LoginForm/LoginForm";
+import Main from "./Main/Main";
+import Header from "@/components/Header/Header";
 
 export default function Home() {
-  return <LoginForm />;
+  return (
+    <>
+      <Header isLogin={false} />
+      <Main />
+    </>
+  );
 }

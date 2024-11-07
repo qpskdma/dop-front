@@ -1,9 +1,10 @@
 "use client";
 
-import Sidebar from "@/components/Sidebar/Sidebar";
 import React, { useState, ReactNode } from "react";
 import styles from "./layout.module.scss";
-import LogoutBtn from "@/components/LogoutBtn/LogoutBtn";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
 
 interface layoutProps {
   children: ReactNode | never;
@@ -17,6 +18,7 @@ const InnerLayout: React.FC<layoutProps> = ({ children }) => {
   };
   return (
     <>
+      <Header isLogin={false} isLogout={true} />
       <img
         className={styles.menuIcon}
         src="/BurgerMenu.svg"
@@ -30,8 +32,8 @@ const InnerLayout: React.FC<layoutProps> = ({ children }) => {
           setIsSidebarActive={setIsSidebarActive}
         />
       ) : null}
-      <LogoutBtn />
       {children}
+      <Footer />
     </>
   );
 };

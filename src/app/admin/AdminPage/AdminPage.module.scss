@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-items: end;
-  margin: 25px 200px 10px 200px;
+  margin: 125px 200px 10px 200px;
   & > :first-child {
     justify-self: start;
   }

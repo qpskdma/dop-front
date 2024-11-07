@@ -1,7 +1,8 @@
 .closeBtn {
-  position: absolute;
+  position: fixed;
   top: 0.2;
   right: 0;
+  z-index: 1000000;
 }
 
 .closeBtn:hover {
@@ -9,12 +10,12 @@
 }
 
 .container {
-  position: absolute;
+  position: fixed;
   width: 250px;
   height: 100%;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 10000000000;
   background-color: var(--background-dark);
   display: flex;
   flex-direction: column;

@@ -7,7 +7,7 @@ interface LogoutBtnProps {}
 const LogoutBtn: React.FC<LogoutBtnProps> = ({}) => {
   return (
     <div className={styles.wrapper}>
-      <Link href="/" onClick={() => localStorage.removeItem("token")}>
+      <Link href="/login" onClick={() => localStorage.removeItem("token")}>
         <p className={styles.exitBtn}>
           Logout
           <span>

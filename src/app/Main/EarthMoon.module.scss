@@ -1,0 +1,51 @@
+.earthMoon {
+  margin-left: 70px;
+}
+.earth {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+.moon {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  animation: glow-star 6s infinite ease-in-out alternate 9s;
+}
+
+.earth.hovered {
+  animation: spin-earth 2s;
+}
+
+.moon.hovered {
+  animation: spin-earth 1s;
+}
+
+@-webkit-keyframes spin-earth {
+  100% {
+    -webkit-transform: rotate(-360deg);
+    transition: transform 20s;
+  }
+}
+@keyframes spin-earth {
+  100% {
+    -webkit-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+    transition: transform 20s;
+  }
+}
+
+@keyframes glow-star {
+  40% {
+    -webkit-opacity: 0.3;
+    opacity: 0.3;
+  }
+  90%,
+  100% {
+    -webkit-opacity: 1;
+    opacity: 1;
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    border-radius: 999999px;
+  }
+}

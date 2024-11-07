@@ -1,9 +1,11 @@
+"use client";
 import React, { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./LoginForm.module.scss";
 import "@/components/Loader/Loader.scss";
 import rest from "../../../services/rest";
 import PasswordInput from "@/components/PasswordInput/PasswordInput";
+import Header from "@/components/Header/Header";
 
 interface LoginFormProps {}
 
@@ -63,6 +65,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
   return (
     <div className={styles.page}>
+      <Header isLogin={false} />
       <form method="post" className={styles.loginForm}>
         <h6>Login</h6>
         <input
