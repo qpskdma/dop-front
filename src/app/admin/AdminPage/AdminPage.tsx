@@ -202,7 +202,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
         <div className={styles.navTextContainer}>
           <div>User</div>
           <div
-            className={styles.sortElement}
+            className={`${styles.sortElement} ${styles.createTime}`}
             data-tooltip-id="sortByCreation"
             data-tooltip-content="Sort by creation time"
             data-tooltip-place="top"
@@ -219,7 +219,7 @@ const AdminPage: React.FC<AdminPageProps> = ({}) => {
             )}
           </div>
           <div
-            className={styles.sortElement}
+            className={`${styles.sortElement} ${styles.createTime}`}
             data-tooltip-id="sortByLastSession"
             data-tooltip-content="Sort by last session time"
             data-tooltip-place="top"

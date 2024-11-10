@@ -9,6 +9,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-items: end;
+  align-items: center;
   margin: 125px 200px 10px 200px;
   & > :first-child {
     justify-self: start;
@@ -64,6 +65,10 @@
     margin-left: 7px;
     opacity: 0;
   }
+}
+
+.createTime {
+  margin-left: 24px;
 }
 
 @media (max-width: 1300px) {

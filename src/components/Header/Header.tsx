@@ -11,8 +11,9 @@ const Header: React.FC<HeaderProps> = ({ isLogin, isLogout }) => {
   const router = useRouter();
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} id="header">
       <a href="/" className={styles.logo}>
+        <img src="/Logo.svg" alt="" />
         <h1>DOP</h1>
       </a>
       <ul className={styles.navbar}>
@@ -23,25 +24,19 @@ const Header: React.FC<HeaderProps> = ({ isLogin, isLogout }) => {
           <a href="/">API</a>
         </li>
         <li>
-          <a href="/">Rools</a>
+          <a href="/">Rules</a>
         </li>
         <li>
-          <a href="/">Registration</a>
+          <a href="/registration">Registration</a>
         </li>
       </ul>
       {isLogin && (
-        <button
-          className={styles.loginBtn}
-          onClick={() => router.push("/login")}
-        >
+        <button className="loginBtn" onClick={() => router.push("/login")}>
           Login
         </button>
       )}
       {isLogout && (
-        <button
-          className={styles.loginBtn}
-          onClick={() => router.push("/login")}
-        >
+        <button className="loginBtn" onClick={() => router.push("/login")}>
           Logout
         </button>
       )}

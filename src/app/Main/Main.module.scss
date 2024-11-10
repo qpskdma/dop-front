@@ -1,17 +1,11 @@
-.container {
-  width: 900px;
-  height: 1100px;
-  margin: 0 auto;
-  //   text-align: center;
-}
-
 .introContainer {
   height: 650px;
   display: grid;
   grid-template-columns: repeat(2, minmax(200px, 500px));
   grid-template-rows: 1fr;
-  //   justify-content: center;
+  margin: 0 17vw;
   align-items: center;
+  margin-bottom: 160px;
 }
 
 // .introText {
@@ -32,6 +26,11 @@
 }
 
 .dopInfo {
+  margin: 0 17vw;
+  margin-bottom: 160px;
+  display: flex;
+  // justify-content: center;
+
   p {
     font-size: 46px;
     margin-bottom: 50px;
@@ -122,7 +121,7 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .introContainer {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, minmax(200px, 500px));

@@ -1,0 +1,36 @@
+.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-between;
+  padding: 0 14.1vw;
+  //   column-gap: 5vw;
+  div {
+    width: auto;
+    display: flex;
+    justify-content: center;
+  }
+  button {
+    // flex: 1;
+  }
+  > :nth-child(3) {
+    display: flex;
+    justify-content: right;
+    text-align: end;
+  }
+}
+
+.logo {
+  font-size: 25px;
+  margin-left: -20px;
+  display: flex;
+  column-gap: 10px;
+  img {
+    // width: 30px;
+    height: 55px;
+    margin-top: 4px;
+  }
+}
+
+.logo:hover::after {
+  width: 0;
+}

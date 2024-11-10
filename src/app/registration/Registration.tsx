@@ -1,45 +1,43 @@
-"use client";
+import HeaderDefault from "@/components/Header/HeaderDefault";
+import PasswordInput from "@/components/PasswordInput/PasswordInput";
+import styles from "@/app/login/LoginForm.module.scss";
 import React, { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useRouter as nextRouter } from "next/router";
-import styles from "./LoginForm.module.scss";
-import "@/components/Loader/Loader.scss";
 import rest from "../../../services/rest";
-import PasswordInput from "@/components/PasswordInput/PasswordInput";
-import HeaderDefault from "@/components/Header/HeaderDefault";
 
-interface LoginFormProps {}
+interface RegistrationProps {}
 
-const LoginForm: React.FC<LoginFormProps> = ({}) => {
+const Registration: React.FC<RegistrationProps> = ({}) => {
   const [isLoading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [textError, setTextError] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const router = useRouter();
-  // const { paramName } = nextRouter().query;
 
   async function handleLogin(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    if (!username || !password) {
+    if (!username || !password || !email) {
       setTextError("Enter data");
       return;
     }
     setLoading(true);
     const bodyData = {
+      email: email,
       username: username,
       password: password,
     };
     try {
-      const response = await rest.post("/auth/login", bodyData, {
+      await rest.post("/auth/register", bodyData, {
         headers: {
           "Content-Type": "application/json",
           Accept: "*/*",
           "Accept-Encoding": "gzip, deflate, br",
         },
       });
-      localStorage.setItem("token", response.data["access_token"]);
-      router.push("/admin/clients");
+      //   localStorage.setItem("token", response.data["access_token"]);
+      router.push("/login");
     } catch (error) {
       setTextError("Incorrect login details");
       console.error("Error fetching data: ", error);
@@ -67,10 +65,22 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
   return (
     <div className={styles.page}>
-      {/* <Header /> */}
       <HeaderDefault isLogin={false} />
       <form method="post" className={styles.loginForm}>
-        <h6>Login</h6>
+        <h6>Registration</h6>
+        <input
+          className="formInput"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          //   pattern="[a-zA-Z0-9]+"
+          //   title="Letters and numbers only"
+          onChange={(e) => {
+            setTextError("");
+            setEmail(e.target.value);
+          }}
+        />
         <input
           className="formInput"
           type="text"
@@ -91,11 +101,11 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
         />
         <div className={styles.textError}>{textError}</div>
         <button type="submit" onClick={(event) => handleLogin(event)}>
-          {isLoading ? <span className="loader"></span> : "Login"}
+          {isLoading ? <span className="loader"></span> : "Register"}
         </button>
       </form>
     </div>
   );
 };
 
-export default LoginForm;
+export default Registration;

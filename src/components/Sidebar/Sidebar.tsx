@@ -44,7 +44,7 @@ const Sidebar: React.FC<SideMenuProps> = ({
             <Link
               href="/admin/clients"
               className={`${styles.element} ${
-                pathname == "/admin/clients" ? styles.active : ""
+                pathname == "/admin/clients" ? styles.active : styles.inactive
               }`}
             >
               <img src="/Users.svg" alt="Users" />
@@ -55,7 +55,7 @@ const Sidebar: React.FC<SideMenuProps> = ({
             <Link
               href="/admin/servers"
               className={`${styles.element} ${
-                pathname == "/admin/servers" ? styles.active : ""
+                pathname == "/admin/servers" ? styles.active : styles.inactive
               }`}
             >
               <img src="/Server.svg" alt="Server" />

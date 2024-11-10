@@ -22,13 +22,15 @@
   }
 }
 
-.loginBtn {
-  padding: 0 35px;
-  border-radius: 75px;
-  background-color: inherit;
-  border: 2px solid var(--text-color);
-}
-
-.loginBtn:hover {
-  border: 2px solid var(--secondary-btn-color);
+.logo {
+  font-size: 25px;
+  display: flex;
+  column-gap: 10px;
+  img {
+    height: 55px;
+    margin-top: 4px;
+  }
+  &:hover::after {
+    width: 0;
+  }
 }

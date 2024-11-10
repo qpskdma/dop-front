@@ -70,11 +70,19 @@
   align-items: center;
   column-gap: 15px;
   padding: 5px 15px;
+  border-radius: 6px;
+}
+
+.element:hover::after {
+  width: 0;
+}
+
+.inactive:hover {
+  background: rgb(47, 56, 67);
 }
 
 .active {
   background-color: var(--main-color);
-  border-radius: 6px;
 }
 
 @keyframes open {

@@ -37,7 +37,7 @@ body {
 }
 
 main {
-  margin-top: 70px;
+  margin-top: 100px;
   min-height: 500px;
   height: 100%;
 }
@@ -49,6 +49,19 @@ a {
 
 ul {
   list-style-type: none;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  width: 100vw;
+  height: 70px;
+  top: 0;
+  z-index: 10;
+  align-items: center;
+  backdrop-filter: blur(27px);
+  background-color: rgb(0, 0, 0, 0.1);
 }
 
 button {
@@ -72,8 +85,9 @@ button:hover {
   justify-content: right;
   align-items: center;
   column-gap: 5px;
+  border-radius: 75px;
   span {
-    font-size: 32px;
+    font-size: 29px;
     font-weight: 100;
     width: 36px;
     height: 100%;
@@ -81,7 +95,7 @@ button:hover {
     background-color: var(--main-color);
     border-radius: 0 6px 6px 0;
     margin-left: 10px;
-    // padding-top: 2px;
+    border-radius: 75px;
   }
   div {
     margin-right: 35%;
@@ -94,6 +108,18 @@ button:hover {
 
 .deleteBtn:hover {
   background-color: rgb(153, 27, 27);
+}
+
+.loginBtn {
+  width: 130px;
+  padding: 0 35px;
+  border-radius: 75px;
+  background-color: inherit;
+  border: 2px solid var(--text-color);
+}
+
+.loginBtn:hover {
+  border: 2px solid var(--secondary-btn-color);
 }
 
 .tableBtnContainer {
